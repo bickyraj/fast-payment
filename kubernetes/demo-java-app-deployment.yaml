@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-java-app
+  namespace: argocd
+  annotations:
+    kubernetes.io/change-cause: "Force update $(date)"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demo-java-app
+  template:
+    metadata:
+      labels:
+        app: demo-java-app
+    spec:
+      containers:
+        - name: demo-java-app
+          image: bickyraj/demo-java-app:fd744996958586726fbef1b020c424858071f0d1
+          ports:
+            - containerPort: 3030
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://host.docker.internal:5432/demospring_db"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "admin"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "admin"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "host.docker.internal:29092,host.docker.internal:39092"
+            - name: SPRING_RABBITMQ_HOST
+              value: "host.docker.internal"
+            - name: SPRING_RABBITMQ_PORT
+              value: "5672"
+            - name: PROMETHEUS_ENDPOINT
+              value: "http://host.docker.internal:9090"
+            - name: GRAFANA_ENDPOINT
+              value: "http://host.docker.internal:3000"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config/application-prod.properties
+              subPath: application-prod.properties
+              readOnly: true
+      volumes:
+        - name: config-volume
+          configMap:
+            name: production-config
+            items:
+              - key: application-prod.properties
+                path: application-prod.properties

@@ -1,0 +1,6 @@
+resources:
+  - deployment/argocd-server-deploy.yaml
+  - service/argocd-server-service.yaml
+  - argocd-clusterrole.yaml
+  - argocd-clusterrolebinding.yaml
+  - argocd-sa.yaml
