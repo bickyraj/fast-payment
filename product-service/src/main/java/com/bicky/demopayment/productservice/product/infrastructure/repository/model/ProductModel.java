@@ -34,4 +34,13 @@ public class ProductModel {
                 .setPrice(product.getPrice())
                 .setDescription(product.getDescription());
     }
+
+    public static Product toEntity(ProductModel productModel) {
+        Product product = new Product();
+        product.setId(productModel.getId());
+        product.setName(productModel.getName());
+        product.setPrice(productModel.getPrice());
+        product.setDescription(productModel.getDescription());
+        return product;
+    }
 }

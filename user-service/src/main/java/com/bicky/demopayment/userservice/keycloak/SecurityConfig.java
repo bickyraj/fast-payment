@@ -38,12 +38,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize ->
                         authorize
                                 .requestMatchers("/").permitAll()
-                                .requestMatchers("/api/user/register").permitAll()
+                                .requestMatchers("/api/users/register").permitAll()
                                 .requestMatchers("/admin/**").hasRole("app_admin")
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> {
-                    jwt.jwkSetUri("http://localhost:7000/realms/stock-market/protocol/openid-connect/certs");
+                    jwt.jwkSetUri("http://localhost:7000/realms/fast-payment/protocol/openid-connect/certs");
                     jwt.jwtAuthenticationConverter(authenticationConverter(realmRolesAuthoritiesConverter()));
                 }));
         return http.build();

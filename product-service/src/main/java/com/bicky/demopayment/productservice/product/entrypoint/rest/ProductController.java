@@ -8,14 +8,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/api/products")
 @RequiredArgsConstructor
 public class ProductController {
     private final CreateProductUserCase createProductUserCase;
 
     @PostMapping("/create")
-    public Boolean create(@RequestBody Product product) {
+    public Boolean create(@RequestBody Product product) throws IOException {
         return createProductUserCase.execute(CreateProductUserCase.Request.of(product))
                 .getSuccess();
     }

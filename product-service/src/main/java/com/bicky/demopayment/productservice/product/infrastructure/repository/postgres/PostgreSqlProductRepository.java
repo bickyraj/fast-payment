@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 public class PostgreSqlProductRepository implements ProductRepository {
     private final JpaProductRepository jpaProductRepository;
     @Override
-    public boolean save(Product product) {
-        jpaProductRepository.save(ProductModel.fromEntity(product));
-        return true;
+    public Product save(Product product) {
+        ProductModel productModel =  jpaProductRepository.save(ProductModel.fromEntity(product));
+        return ProductModel.toEntity(productModel);
     }
 }
