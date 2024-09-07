@@ -1,7 +1,9 @@
 package com.bicky.demopayment.productservice.product.application;
 
 import com.bicky.demopayment.productservice.product.domain.entity.Product;
+import com.bicky.demopayment.productservice.product.domain.entity.elastic.ElasticProduct;
 import com.bicky.demopayment.productservice.product.domain.repository.ProductRepository;
+import com.bicky.demopayment.productservice.product.domain.repository.elastic.ElasticProductRepository;
 import lombok.*;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
@@ -32,21 +34,16 @@ public class CreateProductUserCase {
 
     private final ProductRepository productRepository;
     private final RestHighLevelClient restHighLevelClient;
+    private final ElasticProductRepository elasticProductRepository;
 
-    public Response execute(Request request) throws IOException {
+    public Response execute(Request request) {
         Product product = productRepository.save(request.requestBody);
-        IndexRequest indexRequest = new IndexRequest("products")
-                .id(product.getId().toString())
-                .source("name", product.getName(),
-                        "description", product.getDescription(),
-                        "price", product.getPrice());
-        restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
-//        System.out.println("Elasticsearch Response: " + indexResponse);
-//        if (indexResponse.getResult() == IndexResponse.Result.CREATED) {
-//            return Response.of(true);
-//        } else {
-//            return Response.of(false);
-//        }
+        ElasticProduct elasticProduct = new ElasticProduct();
+        elasticProduct.setId(product.getId().toString());
+        elasticProduct.setName(product.getName());
+        elasticProduct.setDescription(product.getDescription());
+        elasticProduct.setPrice(String.valueOf(product.getPrice()));
+        elasticProductRepository.save(elasticProduct);
         return Response.of(true);
     }
 }
