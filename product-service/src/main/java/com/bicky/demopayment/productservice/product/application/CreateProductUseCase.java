@@ -5,17 +5,12 @@ import com.bicky.demopayment.productservice.product.domain.entity.elastic.Elasti
 import com.bicky.demopayment.productservice.product.domain.repository.ProductRepository;
 import com.bicky.demopayment.productservice.product.domain.repository.elastic.ElasticProductRepository;
 import lombok.*;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
 @Component
 @RequiredArgsConstructor
-public class CreateProductUserCase {
+public class CreateProductUseCase {
     @Getter
     @AllArgsConstructor(staticName = "of")
     @EqualsAndHashCode
