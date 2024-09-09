@@ -8,7 +8,11 @@ import com.bicky.demopayment.productservice.product.application.SearchProductUse
 import com.bicky.demopayment.productservice.product.domain.entity.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/products")
@@ -44,6 +48,12 @@ public class ProductController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "") String name
     ) {
+        String[] names1 = new String[] {"Ava", "Emma", "Olivia"};
+        String[] names2 = new String[] {"Olivia", "Sophia", "Emma"};
+        Set<String> namesSet = new HashSet<>();
+        namesSet.addAll(Arrays.asList(names1));
+        namesSet.addAll(Arrays.asList(names2));
+        namesSet.toArray(new String[0]);
         return searchProductUseCase.execute(SearchProductUseCase.Request.of(page, size, name)).getProducts();
     }
 }
