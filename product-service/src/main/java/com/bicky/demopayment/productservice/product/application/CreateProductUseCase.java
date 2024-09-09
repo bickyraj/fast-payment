@@ -28,8 +28,8 @@ public class CreateProductUseCase {
     }
 
     private final ProductRepository productRepository;
-    private final RestHighLevelClient restHighLevelClient;
     private final ElasticProductRepository elasticProductRepository;
+
 
     public Response execute(Request request) {
         Product product = productRepository.save(request.requestBody);
