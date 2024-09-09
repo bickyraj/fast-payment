@@ -28,17 +28,9 @@ public class CreateProductUseCase {
     }
 
     private final ProductRepository productRepository;
-    private final ElasticProductRepository elasticProductRepository;
-
 
     public Response execute(Request request) {
-        Product product = productRepository.save(request.requestBody);
-        ElasticProduct elasticProduct = new ElasticProduct();
-        elasticProduct.setId(product.getId().toString());
-        elasticProduct.setName(product.getName());
-        elasticProduct.setDescription(product.getDescription());
-        elasticProduct.setPrice(String.valueOf(product.getPrice()));
-        elasticProductRepository.save(elasticProduct);
+        productRepository.save(request.requestBody);
         return Response.of(true);
     }
 }
