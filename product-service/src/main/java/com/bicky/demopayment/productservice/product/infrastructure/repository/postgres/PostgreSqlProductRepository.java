@@ -1,5 +1,6 @@
 package com.bicky.demopayment.productservice.product.infrastructure.repository.postgres;
 
+import com.bicky.demopayment.productservice.product.annotations.LogProductCreate;
 import com.bicky.demopayment.productservice.product.domain.entity.Product;
 import com.bicky.demopayment.productservice.product.domain.repository.ProductRepository;
 import com.bicky.demopayment.productservice.product.infrastructure.repository.jpa.JpaProductRepository;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostgreSqlProductRepository implements ProductRepository {
     private final JpaProductRepository jpaProductRepository;
+
+    @LogProductCreate
     @Override
     public Product save(Product product) {
         ProductModel productModel =  jpaProductRepository.save(ProductModel.fromEntity(product));

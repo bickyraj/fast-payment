@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ElasticProductRepository extends ElasticsearchRepository<ElasticProduct, String> {
 
-
     @Query("{\"wildcard\": {\"name\": {\"value\": \"*?0*\"}}}")
     Page<Product> findByNameContaining(String substring, Pageable pageable);
 }
