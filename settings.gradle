@@ -1,2 +1,2 @@
 rootProject.name = 'demo payment-parent'
-include 'service-registry', 'user-service', 'product-service', 'order-service', 'api-gateway'
+include 'service-registry', 'user-service', 'product-service', 'order-service', 'api-gateway', 'payment-service'
