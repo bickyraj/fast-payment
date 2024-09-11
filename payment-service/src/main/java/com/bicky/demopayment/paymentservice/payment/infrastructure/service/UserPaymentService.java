@@ -73,7 +73,8 @@ public class UserPaymentService {
                 .cardDetail(cardDetail)
                 .user(user)
                 .build();
-
-        return paymentMethodRepository.save(paymentMethod);
+        paymentMethodRepository.save(paymentMethod);
+        return paymentServiceProvider
+                .addPaymentMethod(userPaymentProvider.getProviderCustomerId(), paymentMethodId.value());
     }
 }
