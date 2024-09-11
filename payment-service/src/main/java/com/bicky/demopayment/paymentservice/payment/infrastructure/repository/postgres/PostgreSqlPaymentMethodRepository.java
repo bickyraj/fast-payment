@@ -1,6 +1,9 @@
 package com.bicky.demopayment.paymentservice.payment.infrastructure.repository.postgres;
 
 import com.bicky.demopayment.paymentservice.payment.domain.entity.PaymentMethod;
+import com.bicky.demopayment.paymentservice.payment.infrastructure.repository.model.PaymentMethodModel;
+import com.bicky.demopayment.paymentservice.shared.valueobject.CardDetail;
+import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +20,29 @@ public class PostgreSqlPaymentMethodRepository implements PaymentMethodRepositor
     private final ObjectMapper objectMapper;
 
     @Override
-    public void save(PaymentMethod paymentMethod) throws JsonProcessingException {
-        String accountDetailAsJson = objectMapper.writeValueAsString(paymentMethod.getAccountDetails());
-        jpaPaymentMethodRepository.savePaymentMethod(
-                paymentMethod.getUser().getId(),
-                paymentMethod.getPaymentType().name(),
-                paymentMethod.getPaymentProvider().name(),
-                accountDetailAsJson
-        );
+    public boolean save(PaymentMethod paymentMethod) {
+        try {
+            String cardDetailJson = objectMapper.writeValueAsString(paymentMethod.getCardDetail());
+            jpaPaymentMethodRepository.savePaymentMethod(
+                    paymentMethod.getUser().getId(),
+                    paymentMethod.getPaymentProvider().name(),
+                    paymentMethod.getPaymentMethodId(),
+                    cardDetailJson
+            );
+            return true;
+        } catch (JsonProcessingException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean existsBy(
+            Long userId, PaymentProvider paymentProvider, String cardNumber,
+            String expirationMonth, String expirationYear
+    ) {
+        PaymentMethodModel paymentMethodModel = jpaPaymentMethodRepository
+                .findBy(userId, paymentProvider.name(), cardNumber, expirationMonth, expirationYear);
+        return paymentMethodModel != null;
     }
 
     @Override
