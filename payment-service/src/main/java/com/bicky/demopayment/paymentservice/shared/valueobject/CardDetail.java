@@ -5,12 +5,10 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @Getter
-@Setter
 @AllArgsConstructor
-public class AccountDetails {
+public class CardDetail {
     private Long cardNumber;
     private String cardHolderName;
     private Integer expiryMonth;
     private Integer expiryYear;
-    private String cvc;
 }

@@ -12,8 +12,23 @@ public interface JpaPaymentMethodRepository extends JpaRepository<PaymentMethodM
     @Modifying
     @Transactional
     @Query(
-            value = "INSERT INTO payment_methods (user_id, payment_method_type, payment_provider, account_details) VALUES (:userId, :payment_method_type, :payment_provider, CAST(:accountDetails AS jsonb))",
+            value = "INSERT INTO " +
+                    " payment_methods (user_id, payment_provider, payment_method_id, card_detail) " +
+                    " VALUES (:userId, :paymentProvider, :paymentMethodId, CAST(:cardDetail AS jsonb))",
             nativeQuery = true
     )
-    void savePaymentMethod(Long userId, String payment_method_type, String payment_provider, String accountDetails);
+    void savePaymentMethod(Long userId, String paymentProvider, String paymentMethodId, String cardDetail);
+
+    @Transactional
+    @Query(
+            value = " SELECT * from " +
+                    " payment_methods where " +
+                    " user_id = :userId and payment_provider = :paymentProvider " +
+                    " AND CAST(card_detail->>'cardNumber' as varchar) = CAST(:cardNumber as varchar) " +
+                    " AND CAST(card_detail->>'expiryMonth' as varchar) = CAST(:expMonth as varchar) " +
+                    " AND CAST(card_detail->>'expiryYear' as varchar) = CAST(:expYear as varchar) " +
+                    " limit 1",
+            nativeQuery = true
+    )
+    PaymentMethodModel findBy(Long userId, String paymentProvider, String cardNumber, String expMonth, String expYear);
 }

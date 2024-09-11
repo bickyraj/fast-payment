@@ -1,7 +1,6 @@
 package com.bicky.demopayment.paymentservice.payment.application;
 
-import com.bicky.demopayment.paymentservice.payment.domain.entity.PaymentMethod;
-import com.bicky.demopayment.paymentservice.payment.infrastructure.service.PaymentMethodService;
+import com.bicky.demopayment.paymentservice.payment.infrastructure.service.UserPaymentService;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -29,7 +28,7 @@ public class SavePaymentMethodUseCase {
         private final Boolean success;
     }
 
-    private final PaymentMethodService paymentMethodService;
+    private final UserPaymentService userPaymentService;
 
     public Response execute(Request request) {
         AccountDetails accountDetails = AccountDetails.builder()
@@ -38,12 +37,7 @@ public class SavePaymentMethodUseCase {
                 .expiryMonth(request.getRequestBody().getExpiryMonth())
                 .expiryYear(request.getRequestBody().getExpiryYear())
                 .build();
-        PaymentMethod paymentMethod = PaymentMethod.builder()
-                .paymentProvider(request.getRequestBody().getProvider())
-                .paymentType(request.getRequestBody().getType())
-                .accountDetails(accountDetails)
-                .build();
 
-        return Response.of(paymentMethodService.savePaymentMethod(paymentMethod));
+        return Response.of(userPaymentService.savePaymentMethod(accountDetails, request.getRequestBody().getProvider()));
     }
 }

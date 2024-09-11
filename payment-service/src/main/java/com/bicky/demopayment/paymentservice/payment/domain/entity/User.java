@@ -10,8 +10,9 @@ import lombok.*;
 public class User {
     private Long id;
     private String keycloakId;
+    private String email;
 
     public static User getEmptyObject() {
-        return new User(null, null);
+        return new User(null, null, null);
     }
 }

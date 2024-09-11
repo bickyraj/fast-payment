@@ -1,5 +1,6 @@
 package com.bicky.demopayment.paymentservice.payment.domain.entity;
 
+import com.bicky.demopayment.paymentservice.shared.valueobject.CardDetail;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +16,7 @@ import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentMethodType
 public class PaymentMethod {
     private Long id;
     private User user;
-    private PaymentMethodType paymentType;
     private PaymentProvider paymentProvider;
-    private AccountDetails accountDetails;
+    private String paymentMethodId;
+    private CardDetail cardDetail;
 }
