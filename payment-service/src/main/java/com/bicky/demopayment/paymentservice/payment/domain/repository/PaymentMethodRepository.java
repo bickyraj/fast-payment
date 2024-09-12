@@ -9,4 +9,5 @@ public interface PaymentMethodRepository {
     boolean save(PaymentMethod paymentMethod);
     boolean existsBy(Long userId, PaymentProvider paymentProvider, String cardNumber, String expirationMonth, String expirationYear);
     Set<PaymentMethod> findByUserId(Long id);
+    PaymentMethod findById(Long id);
 }

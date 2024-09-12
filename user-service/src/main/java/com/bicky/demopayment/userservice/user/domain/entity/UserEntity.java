@@ -12,10 +12,17 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class UserEntity {
+    private Long id;
     private String username;
     private String password;
     private String email;
     private String firstName;
     private String lastName;
     private String keycloakId;
+
+    public static UserEntity getEmptyObject() {
+        return new UserEntity(
+                null, null, null, null, null, null, null
+        );
+    }
 }

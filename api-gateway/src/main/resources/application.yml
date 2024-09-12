@@ -24,6 +24,14 @@ spring:
           uri: lb://payment-service
           predicates:
             - Path=/api/payment-method/**
+        - id: payment
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/payment/**
+        - id: order-payment-service
+          uri: lb://order-payment-service
+          predicates:
+            - Path=/api/order-payment/**
   security:
     oauth2:
       client:

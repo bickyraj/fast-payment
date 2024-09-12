@@ -49,4 +49,11 @@ public class PostgreSqlPaymentMethodRepository implements PaymentMethodRepositor
     public Set<PaymentMethod> findByUserId(Long id) {
         return Set.of();
     }
+
+    @Override
+    public PaymentMethod findById(Long id) {
+        return jpaPaymentMethodRepository
+                .findById(id).map(PaymentMethodModel::toEntity)
+                .orElse(PaymentMethod.getEmptyObject());
+    }
 }

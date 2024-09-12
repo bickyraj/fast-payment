@@ -19,4 +19,8 @@ public class PaymentMethod {
     private PaymentProvider paymentProvider;
     private String paymentMethodId;
     private CardDetail cardDetail;
+
+    public static PaymentMethod getEmptyObject() {
+        return new PaymentMethod(null, null, null, null, null);
+    }
 }

@@ -16,4 +16,9 @@ public class PostgreSqlUserRepository implements UserRepository {
         jpaUserRepository.save(UserModel.fromEntity(user));
         return true;
     }
+
+    @Override
+    public UserEntity findByKeycloakId(String keycloakId) {
+        return jpaUserRepository.findByKeycloakId(keycloakId).map(UserModel::toEntity).orElse(UserEntity.getEmptyObject());
+    }
 }

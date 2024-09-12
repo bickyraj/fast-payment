@@ -1,15 +1,14 @@
 package com.bicky.demopayment.orderservice.order.entrypoint.rest;
 
-import com.bicky.contracts.orderRequestBody.OrderRequestBodyOuterClass;
 import com.bicky.demopayment.orderservice.order.application.CreateOrderUseCase;
+import com.bicky.demopayment.orderservice.order.application.GetOrderUseCase;
+import com.bicky.demopayment.orderservice.order.domain.entity.Order;
 import com.bicky.demopayment.orderservice.order.entrypoint.rest.requestbody.OrderRequestBody;
-import com.bicky.demopayment.orderservice.order.infrastructure.service.OrderService;
+import com.bicky.demopayment.orderservice.order.entrypoint.rest.response.GetOrderResponseBody;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -17,9 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     private final CreateOrderUseCase createOrderUseCase;
+    private final GetOrderUseCase getOrderUseCase;
 
     @PostMapping("/create")
     public boolean createOrder(@RequestBody OrderRequestBody orderRequestBody) {
         return createOrderUseCase.execute(CreateOrderUseCase.Request.of(orderRequestBody)).getSuccess();
+    }
+
+    @GetMapping("/{orderId}")
+    public ResponseEntity<GetOrderResponseBody> getOrder(@PathVariable Long orderId) {
+        GetOrderUseCase.Response response = getOrderUseCase.execute(
+                GetOrderUseCase.Request.of(orderId)
+        );
+        return new ResponseEntity<>(
+                GetOrderResponseBody.of(response.getOrder().getId(), response.getOrder().getTotalPrice()), HttpStatus.OK);
     }
 }

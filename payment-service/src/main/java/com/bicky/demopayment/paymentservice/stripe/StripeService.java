@@ -3,13 +3,13 @@ package com.bicky.demopayment.paymentservice.stripe;
 import com.bicky.demopayment.paymentservice.payment.domain.entity.User;
 import com.bicky.demopayment.paymentservice.payment.domain.entity.UserPaymentProvider;
 import com.bicky.demopayment.paymentservice.shared.service.PaymentService;
-import com.bicky.demopayment.paymentservice.shared.valueobject.AccountDetails;
-import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentMethodId;
-import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentProvider;
+import com.bicky.demopayment.paymentservice.shared.valueobject.*;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
+import com.stripe.model.PaymentIntent;
 import com.stripe.model.PaymentMethod;
 import com.stripe.param.CustomerCreateParams;
+import com.stripe.param.PaymentIntentCreateParams;
 import com.stripe.param.PaymentMethodAttachParams;
 import com.stripe.param.PaymentMethodCreateParams;
 import org.springframework.stereotype.Service;
@@ -70,5 +70,23 @@ public class StripeService implements PaymentService {
             throw new RuntimeException(e);
         }
         return true;
+    }
+
+    @Override
+    public PaymentIntentID createPayment(PaymentCustomerId paymentCustomerId, PaymentMethodId paymentMethodId, Double amount) {
+        PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
+                .setAmount((long) (amount * 100))
+                .setCurrency("EUR")
+                .setPaymentMethod(paymentMethodId.value())
+                .setCustomer(paymentCustomerId.getValue())
+                .setConfirmationMethod(PaymentIntentCreateParams.ConfirmationMethod.AUTOMATIC)
+                .setConfirm(true)
+                .build();
+
+        try {
+            return PaymentIntentID.of(PaymentIntent.create(params).getId());
+        } catch (StripeException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

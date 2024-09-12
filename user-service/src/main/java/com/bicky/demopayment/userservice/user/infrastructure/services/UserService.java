@@ -2,6 +2,7 @@ package com.bicky.demopayment.userservice.user.infrastructure.services;
 
 import com.bicky.demopayment.userservice.user.domain.entity.UserEntity;
 import com.bicky.demopayment.userservice.user.domain.repository.UserRepository;
+import com.bicky.demopayment.userservice.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UsersResource;
@@ -23,6 +24,11 @@ public class UserService {
     private final UsersResource userResource;
     private final RealmResource realmResource;
     private final PasswordEncoder passwordEncoder;
+
+    public UserEntity getCurrentUser() {
+        String keycloakId = SecurityUtils.getCurrentUserId();
+        return userRepository.findByKeycloakId(keycloakId);
+    }
 
     public void saveUser(UserEntity user) {
         UserRepresentation keycloakUser = getUserRepresentation(user);

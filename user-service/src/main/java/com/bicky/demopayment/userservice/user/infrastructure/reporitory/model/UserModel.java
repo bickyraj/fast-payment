@@ -33,6 +33,14 @@ public class UserModel {
     @Column(nullable = false, unique = true)
     private String keycloakId;
 
+    public static UserEntity toEntity(UserModel userModel) {
+        return UserEntity.builder()
+                .id(userModel.getId())
+                .keycloakId(userModel.getKeycloakId())
+                .email(userModel.getEmail())
+                .build();
+    }
+
     public static UserModel fromEntity(UserEntity user) {
         UserModel userModel = new UserModel();
         return userModel
