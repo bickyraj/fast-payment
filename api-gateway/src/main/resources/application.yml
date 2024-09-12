@@ -20,14 +20,18 @@ spring:
           uri: lb://product-service
           predicates:
             - Path=/api/products/**
-        - id: payment-service
+        - id: payment-method-service
           uri: lb://payment-service
           predicates:
             - Path=/api/payment-method/**
-        - id: payment
+        - id: payment-service
           uri: lb://payment-service
           predicates:
             - Path=/api/payment/**
+        - id: payment_route
+          uri: lb://payment-service
+          predicates:
+            - Path=/payment/**
         - id: order-payment-service
           uri: lb://order-payment-service
           predicates:
@@ -55,7 +59,16 @@ spring:
           jwk-set-uri: http://localhost:7000/realms/fast-payment/protocol/openid-connect/certs
 logging:
   level:
-    org.springframework.cloud.gateway: DEBUG
+    org:
+      springframework:
+        web: DEBUG
+        security: DEBUG
+        cloud:
+          gateway: DEBUG
+        boot:
+          web:
+            servlet:
+              FilterRegistrationBean: TRACE
 eureka:
   client:
     service-url:

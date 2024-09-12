@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: payment-service
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    enabled: true
   datasource:
     url: jdbc:postgresql://localhost:5432/demospring_db
     username: admin
@@ -50,7 +55,14 @@ logging:
           jdbc:
             bind: OFF
       springframework:
+        web: DEBUG
         security: DEBUG
+        cloud:
+          gateway: DEBUG
+        boot:
+          web:
+            servlet:
+              FilterRegistrationBean: TRACE
 
 keycloak:
   realm: fast-payment
@@ -68,4 +80,4 @@ eureka:
 
 stripe:
   api:
-    key: sk_test_51M9wCfHl4wh1J75PpOTcu0CneG3UE2Cn9jn85LLuzdW1ZqYod0VOFIdLXTQteIJiIY3KcApmrL3nftbHqd2MagEk00A8z8sSyf
+    key: sk_test_51Py2m9ILN8lgkSQJJbkrFO6IaprfP906cHTh9qwjpAJ7JHg8uGVujiGvGEAkW0TvpYAhEIFqJ3Fv6q0OWKBiYfrB00k2tvF80N
