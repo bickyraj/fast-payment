@@ -5,4 +5,5 @@ import com.bicky.demopayment.userservice.user.domain.entity.UserEntity;
 
 public interface UserRepository {
     boolean save(UserEntity user);
+    UserEntity findByKeycloakId(String keycloakId);
 }

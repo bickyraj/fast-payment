@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize ->
                         authorize
                                 .requestMatchers("/api/payment-method/**").hasRole("app_user")
+                                .requestMatchers("/api/payment/**").hasRole("app_user")
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> {

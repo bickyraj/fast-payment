@@ -39,4 +39,9 @@ public class PostgreSqlOrderRepository implements OrderRepository {
         jpaOrderRepository.save(orderModel);
         return true;
     }
+
+    @Override
+    public Order findById(Long id) {
+        return jpaOrderRepository.findById(id).map(OrderModel::toEntity).orElse(Order.getEmptyObject());
+    }
 }

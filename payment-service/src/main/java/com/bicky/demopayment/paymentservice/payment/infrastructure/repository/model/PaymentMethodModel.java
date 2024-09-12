@@ -3,9 +3,11 @@ package com.bicky.demopayment.paymentservice.payment.infrastructure.repository.m
 import com.bicky.demopayment.paymentservice.payment.converter.CardDetailsConverter;
 import com.bicky.demopayment.paymentservice.payment.domain.entity.PaymentMethod;
 import com.bicky.demopayment.paymentservice.shared.valueobject.CardDetail;
+import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +19,7 @@ import lombok.Setter;
                 columnNames = {"user_id", "payment_provider", "card_detail"}
         )
 )
+@Data
 public class PaymentMethodModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,5 +54,20 @@ public class PaymentMethodModel {
         }
         paymentMethodModel.setPaymentMethodId(paymentMethod.getPaymentMethodId());
         return paymentMethodModel;
+    }
+
+    public static PaymentMethod toEntity(PaymentMethodModel paymentMethodModel) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return PaymentMethod.builder()
+                    .id(paymentMethodModel.getId())
+                    .cardDetail(objectMapper.readValue(paymentMethodModel.getCardDetail(), CardDetail.class))
+                    .paymentMethodId(paymentMethodModel.getPaymentMethodId())
+                    .paymentProvider(PaymentProvider.valueOf(paymentMethodModel.getPaymentProvider()))
+                    .user(UserModel.toEntity(paymentMethodModel.getUser()))
+                    .build();
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
