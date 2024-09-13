@@ -1,6 +1,5 @@
 package com.bicky.demopayment.orderpaymentservice.orderpayment.domain.entity;
 
-import com.bicky.demopayment.orderpaymentservice.orderpayment.valueobject.PaymentStatus;
 import lombok.*;
 
 @Builder

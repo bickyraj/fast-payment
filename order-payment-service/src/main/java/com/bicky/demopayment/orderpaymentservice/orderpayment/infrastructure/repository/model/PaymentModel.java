@@ -27,9 +27,9 @@ public class PaymentModel {
 
     public static PaymentModel fromEntity(Payment payment) {
         PaymentModel paymentModel = new PaymentModel();
+        paymentModel.setId(payment.getId());
         paymentModel.setAmount(payment.getAmount());
-        paymentModel.setId(paymentModel.getId());
-        paymentModel.setStatus(paymentModel.getStatus());
+        paymentModel.setStatus(payment.getStatus().name());
         return paymentModel;
     }
 

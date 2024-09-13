@@ -2,8 +2,10 @@ package com.bicky.demopayment.orderpaymentservice.orderpayment.infrastructure.se
 
 import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.entity.Order;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.entity.OrderPayment;
+import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.entity.Payment;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.entity.PaymentMethod;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.repository.OrderPaymentRepository;
+import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.repository.PaymentRepository;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.exception.PaymentServiceException;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.infrastructure.client.OrderClient;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.infrastructure.client.PaymentClient;
@@ -21,12 +23,12 @@ public class OrderPaymentService {
     private final PaymentClient paymentClient;
     private final OrderClient orderClient;
     private final OrderPaymentRepository orderPaymentRepository;
+    private final PaymentRepository paymentRepository;
 
     public boolean saveOrderPayment(Long orderId, Long paymentMethodId) {
         try {
             OrderPayment existOrderPayment = orderPaymentRepository.findByOrderIdAndPaymentMethodId(
-                    orderId, paymentMethodId
-            );
+                    orderId, paymentMethodId);
 
             if (!OrderPayment.isEmptyObject(existOrderPayment)) {
                 return false;
@@ -36,21 +38,21 @@ public class OrderPaymentService {
             if (orderResponseBody == null) {
                 return false;
             }
+
             CreatePaymentResponseBody paymentResponseBody = paymentClient.createPayment(
-                    CreatePaymentRequestBody.of(paymentMethodId, orderResponseBody.getTotalAmount())
-            ).getBody();
+                    CreatePaymentRequestBody.of(paymentMethodId, orderResponseBody.getTotalAmount())).getBody();
+
             if (paymentResponseBody == null) {
                 return false;
             }
-            PaymentMethod paymentMethod = PaymentMethod.builder()
-                    .id(paymentMethodId)
-                    .build();
-            Order order = Order.builder()
-                    .id(orderId)
-                    .build();
+            PaymentMethod paymentMethod = PaymentMethod.builder().id(paymentMethodId).build();
+            Order order = Order.builder().id(orderId).build();
+//            Payment payment = paymentRepository.getById(paymentResponseBody.getPaymentId());
 
+            Payment payment = Payment.builder().id(paymentResponseBody.getPaymentId()).build();
             OrderPayment orderPayment = OrderPayment.builder()
                     .paymentMethod(paymentMethod)
+                    .payment(payment)
                     .order(order)
                     .build();
             orderPaymentRepository.save(orderPayment);
