@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -32,6 +33,7 @@ public class SecurityConfig {
                 .cors(corsSpec -> corsSpec.configurationSource(corsConfigurationSource()))
                 .authorizeExchange(authorize -> authorize
                         .pathMatchers("/auth/**").permitAll()
+                        .pathMatchers(HttpMethod.POST, "/api/payment/stripe/webhook").permitAll()
                         .pathMatchers("/api/payment/**").authenticated()
                         .pathMatchers("/api/orders/**").authenticated()
                         .pathMatchers("/api/products/**").authenticated()

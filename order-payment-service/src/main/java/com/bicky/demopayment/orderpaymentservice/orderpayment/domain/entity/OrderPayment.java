@@ -12,11 +12,10 @@ public class OrderPayment {
     private Long id;
     private Order order;
     private PaymentMethod paymentMethod;
-    private PaymentStatus status;
-    private String stripePaymentIntentId;
+    private Payment payment;
 
     public static OrderPayment getEmptyObject() {
-        return new OrderPayment(null, null, null, null, null);
+        return new OrderPayment(null, null, null, null);
     }
 
     public static boolean isEmptyObject(OrderPayment orderPayment) {

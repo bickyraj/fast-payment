@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CreatePaymentResponseBody {
+public class CreatePaymentRequestBody {
     private Long paymentMethodId;
     private Double amount;
 }

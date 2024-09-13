@@ -3,9 +3,9 @@ package com.bicky.demopayment.paymentservice.payment.entrypoint.rest;
 import com.bicky.demopayment.paymentservice.payment.application.CreatePaymentUseCase;
 import com.bicky.demopayment.paymentservice.payment.application.GetPaymentMethodUseCase;
 import com.bicky.demopayment.paymentservice.payment.application.SavePaymentMethodUseCase;
-import com.bicky.demopayment.paymentservice.payment.entrypoint.rest.requestbody.CreatePaymentResponseBody;
 import com.bicky.demopayment.paymentservice.payment.entrypoint.rest.requestbody.AddPaymentMethodRequestBody;
-import com.bicky.demopayment.paymentservice.payment.entrypoint.rest.response.CreatePayment;
+import com.bicky.demopayment.paymentservice.payment.entrypoint.rest.requestbody.CreatePaymentRequestBody;
+import com.bicky.demopayment.paymentservice.payment.entrypoint.rest.response.CreatePaymentResponseBody;
 import com.bicky.demopayment.paymentservice.payment.entrypoint.rest.response.GetPaymentMethodResponseBody;
 import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentMethodId;
 import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentProvider;
@@ -24,12 +24,12 @@ public class PaymentController {
     private final CreatePaymentUseCase createPaymentUseCase;
 
     @PostMapping("/create")
-    public ResponseEntity<CreatePayment> createPayment(@RequestBody CreatePaymentResponseBody requestBody) {
+    public ResponseEntity<CreatePaymentResponseBody> createPayment(@RequestBody CreatePaymentRequestBody requestBody) {
         CreatePaymentUseCase.Response response = createPaymentUseCase
                 .execute(CreatePaymentUseCase.Request.of(requestBody.getPaymentMethodId(), requestBody.getAmount()));
 
-        return new ResponseEntity<>(CreatePayment.of(
-                response.getPaymentIntentId(),
+        return new ResponseEntity<>(CreatePaymentResponseBody.of(
+                response.getPaymentId(),
                 response.getSuccess()
         ), HttpStatus.OK);
     }

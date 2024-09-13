@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class CreatePayment {
-    private String paymentIntentId;
+public class CreatePaymentResponseBody {
+    private Long paymentId;
     private Boolean success;
 }
