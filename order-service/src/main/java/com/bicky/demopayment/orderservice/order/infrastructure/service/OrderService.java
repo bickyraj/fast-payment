@@ -1,5 +1,6 @@
 package com.bicky.demopayment.orderservice.order.infrastructure.service;
 
+import com.bicky.demopayment.orderservice.order.annotation.CurrentUserIsOwner;
 import com.bicky.demopayment.orderservice.order.domain.entity.Order;
 import com.bicky.demopayment.orderservice.order.domain.entity.OrderItem;
 import com.bicky.demopayment.orderservice.order.domain.repository.OrderRepository;
@@ -23,5 +24,10 @@ public class OrderService {
         order.setTotalPrice(totalPrice);
         order.setOrderItems(orderItems);
         return orderRepository.create(order);
+    }
+
+    @CurrentUserIsOwner
+    public Order getOrder(Long orderId) {
+        return orderRepository.findById(orderId);
     }
 }

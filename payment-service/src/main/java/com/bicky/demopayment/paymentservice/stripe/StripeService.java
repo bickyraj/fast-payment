@@ -34,31 +34,6 @@ public class StripeService implements PaymentService {
     }
 
     @Override
-    public PaymentMethodId createPaymentMethod(AccountDetails accountDetails) {
-        PaymentMethodCreateParams.CardDetails cardDetails = PaymentMethodCreateParams.CardDetails.builder()
-                .setNumber(accountDetails.getCardNumber().toString())
-                .setExpMonth((long) accountDetails.getExpiryMonth())
-                .setExpYear((long) accountDetails.getExpiryYear())
-                .setCvc(accountDetails.getCvc())
-                .build();
-
-        PaymentMethodCreateParams params = PaymentMethodCreateParams.builder()
-                .setType(PaymentMethodCreateParams.Type.CARD)
-                .setCard(cardDetails)
-                .setBillingDetails(PaymentMethodCreateParams.BillingDetails.builder()
-                        .setName(accountDetails.getCardHolderName())
-                        .build())
-                .build();
-
-        try {
-            PaymentMethod stripePaymentMethod = PaymentMethod.create(params);
-            return PaymentMethodId.of(stripePaymentMethod.getId());
-        } catch (StripeException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
     public Boolean addPaymentMethod(String customerId, String paymentMethodId) {
         try {
             PaymentMethod paymentMethod = PaymentMethod.retrieve(paymentMethodId);
@@ -85,6 +60,22 @@ public class StripeService implements PaymentService {
 
         try {
             return PaymentIntentID.of(PaymentIntent.create(params).getId());
+        } catch (StripeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public CardDetail getCardDetail(PaymentMethodId paymentMethodId) {
+        try {
+            PaymentMethod paymentMethod = PaymentMethod.retrieve(paymentMethodId.value());
+            return CardDetail.builder()
+                    .cardNumber(Long.valueOf(paymentMethod.getCard().getLast4()))
+                    .cardHolderName(paymentMethod.getCustomer())
+                    .expiryMonth(paymentMethod.getCard().getExpMonth().intValue())
+                    .expiryYear(paymentMethod.getCard().getExpYear().intValue())
+                    .build();
+
         } catch (StripeException e) {
             throw new RuntimeException(e);
         }

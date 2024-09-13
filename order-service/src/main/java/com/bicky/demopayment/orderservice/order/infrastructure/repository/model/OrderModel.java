@@ -51,6 +51,7 @@ public class OrderModel {
     public static Order toEntity(OrderModel orderModel) {
         Order order = new Order();
         order.setId(orderModel.getId());
+        order.setUser(UserModel.toEntity(orderModel.getUser()));
         order.setTotalPrice(orderModel.getTotalPrice());
         order.setOrderItems(orderModel.getOrderItems().stream().map(OrderItemModel::toEntity).toList());
         return order;

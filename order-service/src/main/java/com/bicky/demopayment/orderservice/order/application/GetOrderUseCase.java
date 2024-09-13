@@ -1,7 +1,9 @@
 package com.bicky.demopayment.orderservice.order.application;
 
+import com.bicky.demopayment.orderservice.order.annotation.CurrentUserIsOwner;
 import com.bicky.demopayment.orderservice.order.domain.entity.Order;
 import com.bicky.demopayment.orderservice.order.domain.repository.OrderRepository;
+import com.bicky.demopayment.orderservice.order.infrastructure.service.OrderService;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +27,9 @@ public class GetOrderUseCase {
         private final Boolean success;
     }
 
-    private final OrderRepository orderRepository;
+    private final OrderService orderService;
 
     public Response execute(Request request) {
-        return Response.of(orderRepository.findById(request.orderId), true);
+        return Response.of(orderService.getOrder(request.orderId), true);
     }
 }
