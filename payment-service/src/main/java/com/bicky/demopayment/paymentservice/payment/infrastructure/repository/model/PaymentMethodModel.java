@@ -45,6 +45,7 @@ public class PaymentMethodModel {
     public static PaymentMethodModel fromEntity(PaymentMethod paymentMethod) {
         ObjectMapper objectMapper = new ObjectMapper();
         PaymentMethodModel paymentMethodModel = new PaymentMethodModel();
+        paymentMethodModel.setId(paymentMethod.getId());
         paymentMethodModel.setUser(UserModel.fromEntity(paymentMethod.getUser()));
         paymentMethodModel.setPaymentProvider(paymentMethod.getPaymentProvider().name());
         try {

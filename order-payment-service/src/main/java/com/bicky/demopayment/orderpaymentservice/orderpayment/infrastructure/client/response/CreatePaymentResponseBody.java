@@ -8,6 +8,6 @@ import lombok.*;
 @Getter
 @ToString
 public class CreatePaymentResponseBody {
-    private String paymentIntentId;
+    private Long paymentId;
     private Boolean success;
 }

@@ -1,6 +1,7 @@
 package com.bicky.demopayment.orderpaymentservice.orderpayment.infrastructure.repository.model;
 
 import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.entity.OrderPayment;
+import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.entity.Payment;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.valueobject.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -33,11 +34,12 @@ public class OrderPaymentModel {
     @JoinColumn(name = "payment_method_id", nullable = false)
     private PaymentMethodModel paymentMethod;
 
-    @Column(nullable = false)
-    private String status;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "payment_id", referencedColumnName = "id")
+    private PaymentModel payment;
 
     @Column(nullable = false)
-    private String stripePaymentIntentId;
+    private String status;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -62,13 +64,14 @@ public class OrderPaymentModel {
         model.setOrder(OrderModel.fromEntity(orderPayment.getOrder()));
         model.setPaymentMethod(PaymentMethodModel.fromEntity(orderPayment.getPaymentMethod()));
         model.setStatus(orderPayment.getStatus().name());
-        model.setStripePaymentIntentId(orderPayment.getStripePaymentIntentId());
+        model.setPayment(PaymentModel.fromEntity(orderPayment.getPayment()));
         return model;
     }
 
     public static OrderPayment toEntity (OrderPaymentModel model) {
         return OrderPayment.builder()
-                .stripePaymentIntentId(model.getStripePaymentIntentId())
+                .id(model.getId())
+                .payment(PaymentModel.toEntity(model.getPayment()))
                 .status(PaymentStatus.valueOf(model.getStatus()))
                 .paymentMethod(PaymentMethodModel.toEntity(model.getPaymentMethod()))
                 .order(OrderModel.toEntity(model.getOrder()))

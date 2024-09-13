@@ -4,6 +4,7 @@ import com.bicky.demopayment.paymentservice.security.QueryParamJwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,9 +33,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+//                .csrf((csrf) -> csrf
+//                        .ignoringRequestMatchers("/api/payment/stripe/webhook/**")
+//                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize ->
                         authorize
+                                .requestMatchers(HttpMethod.POST, "/api/payment/stripe/webhook").permitAll()
                                 .requestMatchers("/api/payment/**").hasRole("app_user")
                                 .anyRequest().authenticated()
                 )

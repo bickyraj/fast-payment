@@ -1,13 +1,7 @@
 package com.bicky.demopayment.paymentservice.payment.application;
 
-import com.bicky.demopayment.paymentservice.payment.domain.entity.PaymentMethod;
-import com.bicky.demopayment.paymentservice.payment.domain.entity.UserPaymentProvider;
-import com.bicky.demopayment.paymentservice.payment.domain.repository.PaymentMethodRepository;
-import com.bicky.demopayment.paymentservice.payment.domain.repository.UserPaymentProviderRepository;
-import com.bicky.demopayment.paymentservice.payment.infrastructure.service.PaymentServiceProvider;
-import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentCustomerId;
-import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentIntentID;
-import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentMethodId;
+import com.bicky.demopayment.paymentservice.payment.domain.entity.Payment;
+import com.bicky.demopayment.paymentservice.payment.infrastructure.service.PaymentService;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,6 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class CreatePaymentUseCase {
+
     @Getter
     @AllArgsConstructor(staticName = "of")
     @EqualsAndHashCode
@@ -30,25 +25,14 @@ public class CreatePaymentUseCase {
     @EqualsAndHashCode
     @ToString
     public static class Response {
-        private final String paymentIntentId;
+        private final Long paymentId;
         private final Boolean success;
     }
 
-    private final PaymentMethodRepository paymentMethodRepository;
-    private final UserPaymentProviderRepository userPaymentProviderRepository;
+    private final PaymentService paymentService;
 
     public Response execute(Request request) {
-        PaymentMethod paymentMethod = paymentMethodRepository.findById(request.getPaymentMethodId());
-        PaymentServiceProvider paymentServiceProvider = new PaymentServiceProvider(paymentMethod.getPaymentProvider());
-        UserPaymentProvider userPaymentProvider = userPaymentProviderRepository.getUserPaymentProviderBy(
-          paymentMethod.getUser().getId(),
-          paymentMethod.getPaymentProvider()
-        );
-        PaymentIntentID paymentIntentID = paymentServiceProvider.createPayment(
-                PaymentCustomerId.of(userPaymentProvider.getProviderCustomerId()),
-                PaymentMethodId.of(paymentMethod.getPaymentMethodId()),
-                request.getAmount()
-        );
-        return CreatePaymentUseCase.Response.of(paymentIntentID.getValue(), true);
+        Payment payment = paymentService.createPayment(request.getPaymentMethodId(), request.getAmount());
+        return CreatePaymentUseCase.Response.of(payment.getId(), true);
     }
 }

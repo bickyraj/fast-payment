@@ -86,3 +86,6 @@ eureka:
 stripe:
   api:
     key: sk_test_51Py2m9ILN8lgkSQJJbkrFO6IaprfP906cHTh9qwjpAJ7JHg8uGVujiGvGEAkW0TvpYAhEIFqJ3Fv6q0OWKBiYfrB00k2tvF80N
+  webhook:
+    secret: whsec_cviqtLOmTrmtxM7TtXK2EvLgUp88sh0c
+#    secret: whsec_9af87e9602cf68113799a3c5760ff70debe3012d2719ae24776e9ebde7e35194

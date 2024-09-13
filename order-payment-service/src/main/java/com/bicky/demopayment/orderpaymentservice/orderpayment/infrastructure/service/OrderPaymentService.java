@@ -51,8 +51,6 @@ public class OrderPaymentService {
 
             OrderPayment orderPayment = OrderPayment.builder()
                     .paymentMethod(paymentMethod)
-                    .status(PaymentStatus.PENDING)
-                    .stripePaymentIntentId(paymentResponseBody.getPaymentIntentId())
                     .order(order)
                     .build();
             orderPaymentRepository.save(orderPayment);
