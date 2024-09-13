@@ -34,12 +34,9 @@ public class OrderPaymentModel {
     @JoinColumn(name = "payment_method_id", nullable = false)
     private PaymentMethodModel paymentMethod;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "payment_id", referencedColumnName = "id")
     private PaymentModel payment;
-
-    @Column(nullable = false)
-    private String status;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -63,7 +60,6 @@ public class OrderPaymentModel {
         model.setId(orderPayment.getId());
         model.setOrder(OrderModel.fromEntity(orderPayment.getOrder()));
         model.setPaymentMethod(PaymentMethodModel.fromEntity(orderPayment.getPaymentMethod()));
-        model.setStatus(orderPayment.getStatus().name());
         model.setPayment(PaymentModel.fromEntity(orderPayment.getPayment()));
         return model;
     }
@@ -72,7 +68,6 @@ public class OrderPaymentModel {
         return OrderPayment.builder()
                 .id(model.getId())
                 .payment(PaymentModel.toEntity(model.getPayment()))
-                .status(PaymentStatus.valueOf(model.getStatus()))
                 .paymentMethod(PaymentMethodModel.toEntity(model.getPaymentMethod()))
                 .order(OrderModel.toEntity(model.getOrder()))
                 .build();

@@ -13,6 +13,13 @@ public class Payment {
     private PaymentStatus status;
     private Double amount;
 
+    public PaymentStatus getStatus() {
+        if (status == null) {
+            return PaymentStatus.NA;
+        }
+        return status;
+    }
+
     public static Payment getEmptyObject() {
         return new Payment(null, null, null);
     }
