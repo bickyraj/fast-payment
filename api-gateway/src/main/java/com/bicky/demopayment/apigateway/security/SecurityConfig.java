@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .cors(corsSpec -> corsSpec.configurationSource(corsConfigurationSource()))
                 .authorizeExchange(authorize -> authorize
                         .pathMatchers("/auth/**").permitAll()
+                        .pathMatchers("/api/users/register").permitAll()
                         .pathMatchers(HttpMethod.POST, "/api/payment/stripe/webhook").permitAll()
                         .pathMatchers("/api/payment/**").authenticated()
                         .pathMatchers("/api/orders/**").authenticated()
@@ -67,7 +68,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("*")); // Customize as needed
+        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+//        configuration.setAllowedOrigins(Collections.singletonList("*")); // Customize as needed
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         configuration.setAllowCredentials(true);
