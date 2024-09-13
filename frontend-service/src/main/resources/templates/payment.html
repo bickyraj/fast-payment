@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Card</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        /* Main page styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        .form-row {
+            margin-bottom: 20px;
+        }
+        .form-row label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        #submit {
+            background-color: #6772e5;
+            color: #fff;
+            font-size: 16px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #submit:hover {
+            background-color: #5469d4;
+        }
+        /* Stripe element styles */
+        .StripeElement {
+            background-color: white;
+            height: 40px;
+            padding: 10px 12px;
+            border: 1px solid #ccd0d2;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px 0 #e6ebf1;
+            margin-bottom: 20px;
+        }
+        .StripeElement--focus {
+            box-shadow: 0 1px 3px 0 #cfd7df;
+        }
+        .StripeElement--invalid {
+            border-color: #fa755a;
+        }
+        .StripeElement--webkit-autofill {
+            background-color: #fefde5 !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Add Card</h1>
+    <form id="payment-form">
+        <div class="form-row">
+            <label for="card-element">Credit or debit card</label>
+            <div id="card-element"></div> <!-- Stripe Element will be inserted here -->
+            <!-- Used to display form errors -->
+            <div id="card-errors" role="alert"></div>
+        </div>
+        <button id="submit">Add Card</button>
+    </form>
+</div>
+
+<script>
+    var stripe = Stripe('pk_test_51Py2m9ILN8lgkSQJP0khvCSQpO7IIgdC8T58HC5ken2QCYq2E0BPJC0NcNLkqubYJqEdPU5WyjznDP3aX2pVyH1w00IoS3PjTp'); // Replace with your actual publishable key
+    var elements = stripe.elements();
+    var card = elements.create('card', {
+        style: {
+            base: {
+                color: '#32325d',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4'
+                }
+            },
+            invalid: {
+                color: '#fa755a',
+                iconColor: '#fa755a'
+            }
+        }
+    });
+    card.mount('#card-element');
+
+    card.addEventListener('change', function(event) {
+        var displayError = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.textContent = event.error.message;
+        } else {
+            displayError.textContent = '';
+        }
+    });
+
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        stripe.createPaymentMethod({ type: 'card', card: card })
+            .then(function(result) {
+                if (result.error) {
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    // Send PaymentMethod ID to your server
+                    sendPaymentMethodToServer(result.paymentMethod.id);
+                }
+            });
+    });
+
+    function sendPaymentMethodToServer(paymentMethodId) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const bearerToken = urlParams.get('token');
+
+        fetch('http://localhost:8080/api/payment/add-payment-method', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + bearerToken
+            },
+            body: JSON.stringify({ paymentMethodId: paymentMethodId, provider: "STRIPE"}),
+        })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(responseJson) {
+                console.log('PaymentMethodId saved:', responseJson);
+                // Here you might update the UI, redirect to another page, etc.
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+            });
+    }
+</script>
+
+</body>
+</html>

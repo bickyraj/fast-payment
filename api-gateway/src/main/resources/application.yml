@@ -1,5 +1,5 @@
 server:
-  port: 6000
+  port: 8080
 spring:
   main:
     web-application-type: reactive
@@ -8,10 +8,18 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: keycloak
+          uri: http://localhost:7000
+          predicates:
+            - Path=/auth/**
         - id: user-service
           uri: lb://user-service
           predicates:
             - Path=/api/users/**
+        - id: frontend-service
+          uri: lb://frontend-service
+          predicates:
+            - Path=/fast-payment/**
         - id: order-service
           uri: lb://order-service
           predicates:
@@ -20,22 +28,16 @@ spring:
           uri: lb://product-service
           predicates:
             - Path=/api/products/**
-        - id: payment-method-service
-          uri: lb://payment-service
-          predicates:
-            - Path=/api/payment-method/**
         - id: payment-service
           uri: lb://payment-service
           predicates:
             - Path=/api/payment/**
-        - id: payment_route
-          uri: lb://payment-service
-          predicates:
-            - Path=/payment/**
         - id: order-payment-service
           uri: lb://order-payment-service
           predicates:
             - Path=/api/order-payment/**
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
   security:
     oauth2:
       client:

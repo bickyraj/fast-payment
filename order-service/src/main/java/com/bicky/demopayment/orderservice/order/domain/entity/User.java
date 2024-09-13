@@ -11,9 +11,10 @@ import lombok.ToString;
 @EqualsAndHashCode(of = "id")
 public class User {
     private Long id;
+    private String username;
     private String keycloakId;
 
     public static User getEmptyObject() {
-        return new User(null, null);
+        return new User(null, null, null);
     }
 }

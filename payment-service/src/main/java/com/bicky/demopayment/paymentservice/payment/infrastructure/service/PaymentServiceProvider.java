@@ -23,11 +23,6 @@ public class PaymentServiceProvider implements PaymentService {
     }
 
     @Override
-    public PaymentMethodId createPaymentMethod(AccountDetails accountDetails) {
-        return this.paymentService.createPaymentMethod(accountDetails);
-    }
-
-    @Override
     public Boolean addPaymentMethod(String customerId, String paymentMethodId) {
         return this.paymentService.addPaymentMethod(customerId, paymentMethodId);
     }
@@ -35,5 +30,10 @@ public class PaymentServiceProvider implements PaymentService {
     @Override
     public PaymentIntentID createPayment(PaymentCustomerId paymentCustomerId, PaymentMethodId paymentMethodId, Double amount) {
         return this.paymentService.createPayment(paymentCustomerId, paymentMethodId, amount);
+    }
+
+    @Override
+    public CardDetail getCardDetail(PaymentMethodId paymentMethodId) {
+        return this.paymentService.getCardDetail(paymentMethodId);
     }
 }

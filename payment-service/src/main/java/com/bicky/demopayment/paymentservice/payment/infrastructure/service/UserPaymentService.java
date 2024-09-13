@@ -31,7 +31,7 @@ public class UserPaymentService {
         return true;
     }
 
-    public boolean savePaymentMethod(AccountDetails accountDetails, PaymentProvider provider) {
+    public boolean savePaymentMethod(PaymentProvider provider, PaymentMethodId paymentMethodId) {
         String userId = SecurityUtils.getCurrentUserId();
         User user = userRepository.findByKeycloakId(userId);
         UserPaymentProvider userPaymentProvider = userPaymentProviderRepository
@@ -45,12 +45,8 @@ public class UserPaymentService {
             }
         }
 
-        CardDetail cardDetail = CardDetail.builder()
-                .cardNumber(accountDetails.getCardNumber())
-                .cardHolderName(accountDetails.getCardHolderName())
-                .expiryMonth(accountDetails.getExpiryMonth())
-                .expiryYear(accountDetails.getExpiryYear())
-                .build();
+        PaymentServiceProvider paymentServiceProvider = new PaymentServiceProvider(provider);
+        CardDetail cardDetail = paymentServiceProvider.getCardDetail(paymentMethodId);
 
         boolean isExistsPaymentMethod = paymentMethodRepository
                 .existsBy(
@@ -65,8 +61,6 @@ public class UserPaymentService {
             return false;
         }
 
-        PaymentServiceProvider paymentServiceProvider = new PaymentServiceProvider(provider);
-        PaymentMethodId paymentMethodId = paymentServiceProvider.createPaymentMethod(accountDetails);
         PaymentMethod paymentMethod = PaymentMethod.builder()
                 .paymentMethodId(paymentMethodId.value())
                 .paymentProvider(provider)

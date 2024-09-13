@@ -15,7 +15,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class Order {
     private Long id;
-    private Long userId;
+    private User user;
     private List<OrderItem> orderItems;
     private double totalPrice;
 

@@ -1,6 +1,6 @@
-package com.bicky.demopayment.orderpaymentservice.config.feign;
+package com.bicky.demopayment.frontendservice.frontend.config;
 
-import com.bicky.demopayment.orderpaymentservice.orderpayment.exception.PaymentServiceException;
+import com.bicky.demopayment.frontendservice.frontend.exception.PaymentServiceException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import org.springframework.http.HttpStatus;
@@ -14,8 +14,6 @@ public class CustomFeignErrorDecoder implements ErrorDecoder {
     public Exception decode(String methodKey, Response response) {
         if (response.status() == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
             return new PaymentServiceException("Internal Server Error occurred in payment-service");
-        } else if (response.status() == HttpStatus.FORBIDDEN.value()) {
-            return new PaymentServiceException("Not authorized to access");
         }
         return defaultErrorDecoder.decode(methodKey, response);
     }

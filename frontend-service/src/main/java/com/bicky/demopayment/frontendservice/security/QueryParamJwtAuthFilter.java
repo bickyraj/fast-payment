@@ -1,4 +1,4 @@
-package com.bicky.demopayment.paymentservice.security;
+package com.bicky.demopayment.frontendservice.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

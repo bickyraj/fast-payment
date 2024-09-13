@@ -1,8 +1,8 @@
 server:
-  port: 7073
+  port: 7024
 spring:
   application:
-    name: payment-service
+    name: frontend-service
   mvc:
     view:
       prefix: /WEB-INF/views
@@ -13,20 +13,6 @@ spring:
     cache: false
     enabled: true
     mode: HTML
-  datasource:
-    url: jdbc:postgresql://localhost:5432/demospring_db
-    username: admin
-    password: admin
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        use_sql_comments: true
   security:
     oauth2:
       client:
@@ -50,15 +36,6 @@ spring:
 logging:
   level:
     org:
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: OFF
-        orm:
-          jdbc:
-            bind: OFF
       springframework:
         web: DEBUG
         security: DEBUG
@@ -68,21 +45,7 @@ logging:
           web:
             servlet:
               FilterRegistrationBean: TRACE
-
-keycloak:
-  realm: fast-payment
-  auth-server-url: http://localhost:7000
-  resource: fast-payment
-  credentials:
-    secret: YV7BQhesXAof0e0vgHdXZc4tkddJ4Zby
-  public-client: true
-  use-resource-role-mappings: true
-
 eureka:
   client:
     service-url:
       defaultZone: http://192.168.1.64:8761/eureka/
-
-stripe:
-  api:
-    key: sk_test_51Py2m9ILN8lgkSQJJbkrFO6IaprfP906cHTh9qwjpAJ7JHg8uGVujiGvGEAkW0TvpYAhEIFqJ3Fv6q0OWKBiYfrB00k2tvF80N
