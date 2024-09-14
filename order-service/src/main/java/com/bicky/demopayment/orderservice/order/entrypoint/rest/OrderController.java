@@ -2,7 +2,7 @@ package com.bicky.demopayment.orderservice.order.entrypoint.rest;
 
 import com.bicky.demopayment.orderservice.order.application.CreateOrderUseCase;
 import com.bicky.demopayment.orderservice.order.application.GetOrderUseCase;
-import com.bicky.demopayment.orderservice.order.domain.entity.Order;
+import com.bicky.demopayment.orderservice.order.entrypoint.rest.requestbody.GetAllOrdersResponseBody;
 import com.bicky.demopayment.orderservice.order.entrypoint.rest.requestbody.OrderRequestBody;
 import com.bicky.demopayment.orderservice.order.entrypoint.rest.response.GetOrderResponseBody;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +17,11 @@ public class OrderController {
 
     private final CreateOrderUseCase createOrderUseCase;
     private final GetOrderUseCase getOrderUseCase;
+
+    @GetMapping
+    public ResponseEntity<GetAllOrdersResponseBody> getOrders() {
+        return null;
+    }
 
     @PostMapping("/create")
     public boolean createOrder(@RequestBody OrderRequestBody orderRequestBody) {
