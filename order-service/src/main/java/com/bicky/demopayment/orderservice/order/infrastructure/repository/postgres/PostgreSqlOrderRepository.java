@@ -44,4 +44,10 @@ public class PostgreSqlOrderRepository implements OrderRepository {
     public Order findById(Long id) {
         return jpaOrderRepository.findById(id).map(OrderModel::toEntity).orElse(Order.getEmptyObject());
     }
+
+    @Override
+    public List<Order> findAllByUserId(Long userId) {
+        return jpaOrderRepository.findByUserId(userId).stream()
+                .map(OrderModel::toEntity).toList();
+    }
 }
