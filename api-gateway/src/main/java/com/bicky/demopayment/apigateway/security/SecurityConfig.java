@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .authorizeExchange(authorize -> authorize
                         .pathMatchers("/auth/**").permitAll()
                         .pathMatchers("/api/users/register").permitAll()
+                        .pathMatchers("/api/users/login").permitAll()
                         .pathMatchers(HttpMethod.POST, "/api/payment/stripe/webhook").permitAll()
                         .pathMatchers("/api/payment/**").authenticated()
                         .pathMatchers("/api/orders/**").authenticated()
