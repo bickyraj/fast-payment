@@ -1,8 +1,5 @@
 package com.bicky.demopayment.orderpaymentservice.orderpayment.application;
 
-import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.entity.OrderPayment;
-import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.entity.User;
-import com.bicky.demopayment.orderpaymentservice.orderpayment.infrastructure.client.UserClient;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.infrastructure.service.OrderPaymentService;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;

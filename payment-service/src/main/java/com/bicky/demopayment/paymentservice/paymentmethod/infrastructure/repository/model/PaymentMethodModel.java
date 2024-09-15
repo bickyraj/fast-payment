@@ -1,9 +1,7 @@
-package com.bicky.demopayment.paymentservice.payment.infrastructure.repository.model;
+package com.bicky.demopayment.paymentservice.paymentmethod.infrastructure.repository.model;
 
-import com.bicky.demopayment.paymentservice.payment.converter.CardDetailsConverter;
-import com.bicky.demopayment.paymentservice.payment.domain.entity.PaymentMethod;
+import com.bicky.demopayment.paymentservice.paymentmethod.domain.entity.PaymentMethod;
 import com.bicky.demopayment.paymentservice.shared.valueobject.CardDetail;
-import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
@@ -13,7 +11,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Entity(name = "payment.PaymentMethodModel")
+@Entity(name = "paymentmethod.PaymentMethodModel")
 @Table(name = "payment_methods",
         uniqueConstraints = @UniqueConstraint(
                 columnNames = {"user_id", "payment_provider", "card_detail"}
@@ -47,7 +45,6 @@ public class PaymentMethodModel {
         PaymentMethodModel paymentMethodModel = new PaymentMethodModel();
         paymentMethodModel.setId(paymentMethod.getId());
         paymentMethodModel.setUser(UserModel.fromEntity(paymentMethod.getUser()));
-        paymentMethodModel.setPaymentProvider(paymentMethod.getPaymentProvider().name());
         try {
             paymentMethodModel.setCardDetail(objectMapper.writeValueAsString(paymentMethod.getCardDetail()));
         } catch (JsonProcessingException e) {
@@ -64,7 +61,6 @@ public class PaymentMethodModel {
                     .id(paymentMethodModel.getId())
                     .cardDetail(objectMapper.readValue(paymentMethodModel.getCardDetail(), CardDetail.class))
                     .paymentMethodId(paymentMethodModel.getPaymentMethodId())
-                    .paymentProvider(PaymentProvider.valueOf(paymentMethodModel.getPaymentProvider()))
                     .user(UserModel.toEntity(paymentMethodModel.getUser()))
                     .build();
         } catch (JsonProcessingException e) {

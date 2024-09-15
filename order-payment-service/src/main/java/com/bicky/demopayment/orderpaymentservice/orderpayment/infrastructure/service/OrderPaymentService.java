@@ -5,14 +5,12 @@ import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.entity.Orde
 import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.entity.Payment;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.entity.PaymentMethod;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.repository.OrderPaymentRepository;
-import com.bicky.demopayment.orderpaymentservice.orderpayment.domain.repository.PaymentRepository;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.exception.PaymentServiceException;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.infrastructure.client.OrderClient;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.infrastructure.client.PaymentClient;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.infrastructure.client.request.CreatePaymentRequestBody;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.infrastructure.client.response.CreatePaymentResponseBody;
 import com.bicky.demopayment.orderpaymentservice.orderpayment.infrastructure.client.response.GetOrderResponseBody;
-import com.bicky.demopayment.orderpaymentservice.orderpayment.valueobject.PaymentStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +21,6 @@ public class OrderPaymentService {
     private final PaymentClient paymentClient;
     private final OrderClient orderClient;
     private final OrderPaymentRepository orderPaymentRepository;
-    private final PaymentRepository paymentRepository;
 
     public boolean saveOrderPayment(Long orderId, Long paymentMethodId) {
         try {
@@ -47,8 +44,6 @@ public class OrderPaymentService {
             }
             PaymentMethod paymentMethod = PaymentMethod.builder().id(paymentMethodId).build();
             Order order = Order.builder().id(orderId).build();
-//            Payment payment = paymentRepository.getById(paymentResponseBody.getPaymentId());
-
             Payment payment = Payment.builder().id(paymentResponseBody.getPaymentId()).build();
             OrderPayment orderPayment = OrderPayment.builder()
                     .paymentMethod(paymentMethod)
