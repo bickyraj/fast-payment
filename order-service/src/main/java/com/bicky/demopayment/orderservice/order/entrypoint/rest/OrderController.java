@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
@@ -24,8 +27,12 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public boolean createOrder(@RequestBody OrderRequestBody orderRequestBody) {
-        return createOrderUseCase.execute(CreateOrderUseCase.Request.of(orderRequestBody)).getSuccess();
+    public ResponseEntity<Map<String, String>> createOrder(@RequestBody OrderRequestBody orderRequestBody) {
+        CreateOrderUseCase.Response response = createOrderUseCase.execute(CreateOrderUseCase.Request.of(orderRequestBody));
+        Map<String, String> map = new HashMap<>();
+        map.put("success", response.getSuccess().toString());
+        map.put("message", response.getMessage());
+        return new ResponseEntity<>(map, HttpStatus.CREATED);
     }
 
     @GetMapping("/{orderId}")
