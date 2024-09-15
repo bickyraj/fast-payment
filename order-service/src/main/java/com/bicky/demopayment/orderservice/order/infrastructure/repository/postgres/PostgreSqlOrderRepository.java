@@ -25,7 +25,7 @@ public class PostgreSqlOrderRepository implements OrderRepository {
     private final UserRepository userRepository;
 
     @Override
-    public boolean create(Order order) {
+    public Order create(Order order) {
         OrderModel orderModel = new OrderModel();
         orderModel.setTotalPrice(order.getTotalPrice());
         orderModel.setUser(UserModel.fromEntity(userRepository.findByKeycloakId(SecurityUtils.getCurrentUserId())));
@@ -36,8 +36,7 @@ public class PostgreSqlOrderRepository implements OrderRepository {
             itemModel.setProduct(productModel);
             orderModel.addOrderItem(itemModel);
         }
-        jpaOrderRepository.save(orderModel);
-        return true;
+        return OrderModel.toEntity(jpaOrderRepository.save(orderModel));
     }
 
     @Override

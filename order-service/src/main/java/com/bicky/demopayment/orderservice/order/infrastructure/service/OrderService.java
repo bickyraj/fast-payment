@@ -4,6 +4,7 @@ import com.bicky.demopayment.orderservice.order.annotation.CurrentUserIsOwner;
 import com.bicky.demopayment.orderservice.order.domain.entity.Order;
 import com.bicky.demopayment.orderservice.order.domain.entity.OrderItem;
 import com.bicky.demopayment.orderservice.order.domain.repository.OrderRepository;
+import com.bicky.demopayment.orderservice.order.entrypoint.rest.requestbody.SaveOrderPaymentRequestBody;
 import com.bicky.demopayment.orderservice.order.infrastructure.client.OrderPaymentClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,8 @@ public class OrderService {
         Order order = new Order();
         order.setTotalPrice(totalPrice);
         order.setOrderItems(orderItems);
-        orderRepository.create(order);
-        return true;
-//        return orderPaymentClient.saveOrderPayment(order.getId(), paymentMethodId).getBody();
+        Order createdOrder = orderRepository.create(order);
+        return orderPaymentClient.saveOrderPayment(SaveOrderPaymentRequestBody.of(createdOrder.getId(), paymentMethodId)).getBody();
     }
 
     @CurrentUserIsOwner
