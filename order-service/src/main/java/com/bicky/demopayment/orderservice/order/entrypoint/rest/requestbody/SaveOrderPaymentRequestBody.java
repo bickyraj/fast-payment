@@ -2,14 +2,12 @@ package com.bicky.demopayment.orderservice.order.entrypoint.rest.requestbody;
 
 import lombok.*;
 
-import java.util.List;
-
-@AllArgsConstructor
+@AllArgsConstructor(staticName = "of")
+@NoArgsConstructor
 @Setter
 @Getter
 @ToString
-@NoArgsConstructor
-public class OrderRequestBody {
-    private List<OrderItemPayLoad> orderItems;
+public class SaveOrderPaymentRequestBody {
+    private Long orderId;
     private Long paymentMethodId;
 }

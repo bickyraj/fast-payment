@@ -9,12 +9,13 @@ import com.bicky.demopayment.orderservice.order.infrastructure.repository.model.
 import com.bicky.demopayment.orderservice.order.infrastructure.service.OrderService;
 import lombok.*;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class CreateOrderUseCase {
 
@@ -50,6 +51,6 @@ public class CreateOrderUseCase {
                     .build();
             orderItems.add(orderItem);
         }
-        return Response.of(orderService.creatOrder(orderItems));
+        return Response.of(orderService.creatOrder(orderItems, request.getRequestBody().getPaymentMethodId()));
     }
 }
