@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository("payment.JpaPaymentMethodRepository")
 public interface JpaPaymentMethodRepository extends JpaRepository<PaymentMethodModel, Long>  {
     @Modifying
     @Transactional

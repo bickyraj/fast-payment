@@ -2,7 +2,6 @@ package com.bicky.demopayment.paymentservice.payment.infrastructure.repository.p
 
 import com.bicky.demopayment.paymentservice.payment.domain.entity.PaymentMethod;
 import com.bicky.demopayment.paymentservice.payment.infrastructure.repository.model.PaymentMethodModel;
-import com.bicky.demopayment.paymentservice.shared.valueobject.CardDetail;
 import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +12,7 @@ import com.bicky.demopayment.paymentservice.payment.infrastructure.repository.jp
 
 import java.util.Set;
 
-@Repository
+@Repository("payment.PostgreSqlPaymentMethodRepository")
 @RequiredArgsConstructor
 public class PostgreSqlPaymentMethodRepository implements PaymentMethodRepository {
     private final JpaPaymentMethodRepository jpaPaymentMethodRepository;
