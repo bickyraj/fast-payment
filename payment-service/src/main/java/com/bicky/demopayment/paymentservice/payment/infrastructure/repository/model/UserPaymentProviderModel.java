@@ -33,7 +33,7 @@ public class UserPaymentProviderModel {
     @Column(name = "provider_customer_id", nullable = false)
     private String providerCustomerId;
 
-    @Column(name = "created_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP")
+    @Column(name = "created_at", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDate createdAt;
 
     public static UserPaymentProviderModel fromEntity(UserPaymentProvider userPaymentProvider) {
