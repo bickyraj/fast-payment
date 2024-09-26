@@ -92,7 +92,7 @@ services:
     image: grafana/grafana:latest
     container_name: grafana
     ports:
-      - "3000:3000"
+      - "5720:3000"
     volumes:
       - grafana-storage:/var/lib/grafana
       - ./grafana.ini:/etc/grafana/grafana.ini
