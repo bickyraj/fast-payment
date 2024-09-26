@@ -40,6 +40,8 @@ public class UserPaymentService {
             if (!createPaymentProviderCustomer(user, provider)) {
                 return false;
             }
+            userPaymentProvider = userPaymentProviderRepository
+                    .getUserPaymentProviderBy(user.getId(), provider);
         }
 
         PaymentServiceProvider paymentServiceProvider = new PaymentServiceProvider(provider);
