@@ -24,13 +24,19 @@ public class PostgreSqlPaymentRepository implements PaymentRepository {
     }
 
     @Override
-    public Boolean updatePaymentStatus(PaymentIntentID paymentIntentID, PaymentStatus paymentStatus) {
+    public Boolean updatePaymentStatus(PaymentIntentID paymentIntentID, PaymentStatus paymentStatus, Long eventCreatedAt) {
         Optional<PaymentModel> paymentModel = jpaPaymentRepository.findByPaymentintentId(paymentIntentID.getValue());
         if (paymentModel.isEmpty()) {
             return false;
         }
         paymentModel.get().setStatus(paymentStatus.name());
+        paymentModel.get().setEventCreatedAt(eventCreatedAt);
         jpaPaymentRepository.save(paymentModel.get());
         return true;
+    }
+
+    @Override
+    public Optional<Payment> getPayment(PaymentIntentID paymentIntentID) {
+        return jpaPaymentRepository.findByPaymentintentId(paymentIntentID.getValue()).map(PaymentModel::toEntity);
     }
 }

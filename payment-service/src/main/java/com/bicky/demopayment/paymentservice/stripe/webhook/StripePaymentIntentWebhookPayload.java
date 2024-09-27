@@ -14,4 +14,5 @@ public class StripePaymentIntentWebhookPayload {
     private String eventId;
     private String paymentIntentId;
     private PaymentStatus status;
+    private Long created;
 }

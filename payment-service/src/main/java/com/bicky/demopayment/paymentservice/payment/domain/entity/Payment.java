@@ -20,11 +20,12 @@ public class Payment {
     private PaymentStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Long eventCreatedAt;
     private Double amount;
     private User user;
 
     public static Payment getEmptyObject() {
-        return new Payment(null, null, null, null, null, null, null, null, null);
+        return new Payment(null, null, null, null, null, null, null, null, null, null);
     }
 
     public boolean isEmpty() {

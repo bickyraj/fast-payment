@@ -50,6 +50,7 @@ public class StripePaymentIntentWebhookPayloadConverter implements Converter<Str
                     break;
 
             }
+            payload.setCreated(node.path("created").asLong());
             return payload;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

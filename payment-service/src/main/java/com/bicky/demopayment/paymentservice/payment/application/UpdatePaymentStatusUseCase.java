@@ -1,5 +1,6 @@
 package com.bicky.demopayment.paymentservice.payment.application;
 
+import com.bicky.demopayment.paymentservice.payment.domain.entity.Payment;
 import com.bicky.demopayment.paymentservice.payment.domain.repository.PaymentRepository;
 import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentIntentID;
 import com.bicky.demopayment.paymentservice.stripe.webhook.StripePaymentIntentWebhookPayload;
@@ -40,9 +41,22 @@ public class UpdatePaymentStatusUseCase {
                     .convert(request.getPayload());
 
             assert stripePaymentIntentWebhookPayload != null;
+            // check if payment status already exists
+            Payment payment = paymentRepository.getPayment(
+                    PaymentIntentID.of(stripePaymentIntentWebhookPayload.getPaymentIntentId())
+            ).orElse(Payment.getEmptyObject());
+            if (payment.isEmpty()) {
+                return;
+            }
+            if (payment.getEventCreatedAt() != null
+                    &&
+                    payment.getEventCreatedAt() > stripePaymentIntentWebhookPayload.getCreated()) {
+                return;
+            }
             paymentRepository.updatePaymentStatus(
                     PaymentIntentID.of(stripePaymentIntentWebhookPayload.getPaymentIntentId()),
-                    stripePaymentIntentWebhookPayload.getStatus());
+                    stripePaymentIntentWebhookPayload.getStatus(),
+                    stripePaymentIntentWebhookPayload.getCreated());
         } catch (Exception e) {
             System.out.println("Webhook error: " + e.getMessage());
         }

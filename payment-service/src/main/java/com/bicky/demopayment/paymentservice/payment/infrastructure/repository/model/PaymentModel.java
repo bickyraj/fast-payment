@@ -43,6 +43,9 @@ public class PaymentModel {
     @Column(name = "provider", nullable = false)
     private String provider;
 
+    @Column(name = "event_created_at")
+    private Long eventCreatedAt;
+
     @Column(nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private java.sql.Timestamp createdAt;
 
@@ -55,6 +58,7 @@ public class PaymentModel {
         paymentModel.setPaymentintentId(payment.getPaymentIntentID().getValue());
         paymentModel.setPaymentMethod(PaymentMethodModel.fromEntity(payment.getPaymentMethod()));
         paymentModel.setProvider(payment.getProvider().name());
+        paymentModel.setEventCreatedAt(payment.getEventCreatedAt());
         paymentModel.setStatus(payment.getStatus().name());
         paymentModel.setUser(UserModel.fromEntity(payment.getUser()));
         paymentModel.setAmount(payment.getAmount());
@@ -67,6 +71,7 @@ public class PaymentModel {
         payment.setPaymentIntentID(PaymentIntentID.of(paymentModel.getPaymentintentId()));
         payment.setPaymentMethod(PaymentMethodModel.toEntity(paymentModel.getPaymentMethod()));
         payment.setProvider(PaymentProvider.valueOf(paymentModel.getProvider()));
+        payment.setEventCreatedAt(paymentModel.getEventCreatedAt());
         payment.setStatus(PaymentStatus.valueOf(paymentModel.getStatus()));
         payment.setAmount(paymentModel.getAmount());
         payment.setUser(UserModel.toEntity(paymentModel.getUser()));
