@@ -38,7 +38,7 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> {
-                    jwt.jwkSetUri("http://localhost:7000/realms/fast-payment/protocol/openid-connect/certs");
+                    jwt.jwkSetUri("http://localhost:9065/realms/fast-payment/protocol/openid-connect/certs");
                     jwt.jwtAuthenticationConverter(authenticationConverter());
                 }));
         http.addFilterBefore(queryParamJwtAuthFilter(), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
@@ -70,7 +70,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        return JwtDecoders.fromOidcIssuerLocation("http://localhost:7000/realms/fast-payment");
+        return JwtDecoders.fromOidcIssuerLocation("http://localhost:9065/realms/fast-payment");
     }
 
     @Bean
