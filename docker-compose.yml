@@ -114,7 +114,7 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
     ports:
-      - "7000:8080"
+      - "9065:8080"
     command: [ "start-dev" ]
     networks:
       - app-network

@@ -47,7 +47,7 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> {
-                    jwt.jwkSetUri("http://localhost:7000/realms/fast-payment/protocol/openid-connect/certs");
+                    jwt.jwkSetUri("http://localhost:9065/realms/fast-payment/protocol/openid-connect/certs");
                     jwt.jwtAuthenticationConverter(authenticationConverter(realmRolesAuthoritiesConverter()));
                 }));
         return http.build();
