@@ -12,6 +12,17 @@ services:
       - postgres-data:/var/lib/postgresql/data
     networks:
       - app-network
+  mongodb:
+    image: mongo:5
+    container_name: mongo-db
+    environment:
+      MONGO_INITDB_DATABASE: reporting_db
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
   zookeeper-1:
     image: confluentinc/cp-zookeeper:7.4.4
     environment:
@@ -156,3 +167,4 @@ volumes:
   postgres-data:
   grafana-storage:
   esdata:
+  mongo_data:
