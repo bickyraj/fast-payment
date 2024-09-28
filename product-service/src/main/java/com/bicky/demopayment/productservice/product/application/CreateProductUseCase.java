@@ -17,6 +17,9 @@ public class CreateProductUseCase {
     @ToString
     public static class Request {
         private final Product requestBody;
+        public boolean isValid() {
+            return requestBody.getName() != null && !requestBody.getName().isBlank() && requestBody.getPrice() != 0;
+        }
     }
 
     @Getter
@@ -30,6 +33,9 @@ public class CreateProductUseCase {
     private final ProductRepository productRepository;
 
     public Response execute(Request request) {
+        if (!request.isValid()) {
+            return Response.of(false);
+        }
         productRepository.save(request.requestBody);
         return Response.of(true);
     }

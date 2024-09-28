@@ -36,6 +36,10 @@ spring:
           uri: lb://order-payment-service
           predicates:
             - Path=/api/order-payment/**
+        - id: container-service
+          uri: lb://container-service
+          predicates:
+            - Path=/api/container-service/**
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
   security:
