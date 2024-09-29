@@ -7,6 +7,7 @@ import com.bicky.demopayment.reportservice.infrastructure.repository.mongo.Mongo
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -22,5 +23,10 @@ public class NoSqlPurchaseRepository implements PurchaseRepository {
     @Override
     public Optional<Purchase> findByUserId(Long userId) {
         return mongoPurchaseRepository.findByUserId(userId).map(PurchaseModel::toEntity);
+    }
+
+    @Override
+    public List<Purchase> findAllByUserId(Long userId) {
+        return mongoPurchaseRepository.findAllByUserId(userId).stream().map(PurchaseModel::toEntity).toList();
     }
 }
