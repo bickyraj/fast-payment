@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .pathMatchers("/api/orders/**").authenticated()
                         .pathMatchers("/api/products/**").authenticated()
                         .pathMatchers("/api/order-payment/**").authenticated()
+                        .pathMatchers("/api/reports/**").permitAll()
                         .pathMatchers("/fast-payment/**").permitAll()
                         .anyExchange().authenticated()
                 )
