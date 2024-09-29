@@ -9,6 +9,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 @Setter
 @Getter
 @Entity
@@ -46,11 +49,16 @@ public class PaymentModel {
     @Column(name = "event_created_at")
     private Long eventCreatedAt;
 
-    @Column(nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private java.sql.Timestamp createdAt;
 
     @Column(nullable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private java.sql.Timestamp updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = new java.sql.Timestamp(System.currentTimeMillis());
+    }
 
     public static PaymentModel fromEntity(Payment payment) {
         PaymentModel paymentModel = new PaymentModel();
@@ -73,6 +81,7 @@ public class PaymentModel {
         payment.setProvider(PaymentProvider.valueOf(paymentModel.getProvider()));
         payment.setEventCreatedAt(paymentModel.getEventCreatedAt());
         payment.setStatus(PaymentStatus.valueOf(paymentModel.getStatus()));
+        payment.setCreatedAt(paymentModel.getCreatedAt().toLocalDateTime());
         payment.setAmount(paymentModel.getAmount());
         payment.setUser(UserModel.toEntity(paymentModel.getUser()));
         return payment;

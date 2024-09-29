@@ -20,7 +20,8 @@ public class PostgreSqlPaymentRepository implements PaymentRepository {
 
     @Override
     public Payment create(Payment payment) {
-        return PaymentModel.toEntity(jpaPaymentRepository.save(PaymentModel.fromEntity(payment)));
+        PaymentModel paymentModel = jpaPaymentRepository.save(PaymentModel.fromEntity(payment));
+        return PaymentModel.toEntity(paymentModel);
     }
 
     @Override

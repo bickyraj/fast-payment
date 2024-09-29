@@ -1,7 +1,9 @@
 package com.bicky.demopayment.paymentservice.payment.application;
 
 import com.bicky.demopayment.paymentservice.payment.domain.entity.Payment;
+import com.bicky.demopayment.paymentservice.payment.infrastructure.service.PaymentProducer;
 import com.bicky.demopayment.paymentservice.payment.infrastructure.service.PaymentService;
+import com.bicky.demopayment.sharedmodule.dto.PaymentEvent;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,9 +32,15 @@ public class CreatePaymentUseCase {
     }
 
     private final PaymentService paymentService;
+    private final PaymentProducer paymentProducer;
 
     public Response execute(Request request) {
         Payment payment = paymentService.createPayment(request.getPaymentMethodId(), request.getAmount());
+        PaymentEvent paymentEvent = new PaymentEvent();
+        paymentEvent.setCreatedDate(payment.getCreatedAt());
+        paymentEvent.setUserId(payment.getUser().getId());
+        paymentEvent.setTotalAmount(payment.getAmount());
+        paymentProducer.sendPaymentMessage(paymentEvent);
         return CreatePaymentUseCase.Response.of(payment.getId(), true);
     }
 }
