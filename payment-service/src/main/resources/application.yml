@@ -47,6 +47,18 @@ spring:
         jwt:
           issuer-uri: http://localhost:9065/auth/realms/fast-payment
           jwk-set-uri: http://localhost:9065/auth/realms/fast-payment/protocol/openid-connect/certs
+  kafka:
+    bootstrap-servers: localhost:29092,localhost:39092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: report-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
 logging:
   level:
     org:
