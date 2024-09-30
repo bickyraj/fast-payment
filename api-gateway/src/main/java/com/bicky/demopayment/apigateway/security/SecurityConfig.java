@@ -38,6 +38,7 @@ public class SecurityConfig {
                         .pathMatchers(HttpMethod.POST, "/api/payment/stripe/webhook").permitAll()
                         .pathMatchers("/api/payment/**").authenticated()
                         .pathMatchers("/api/orders/**").authenticated()
+                        .pathMatchers(HttpMethod.GET, "/api/products/images/**").permitAll()
                         .pathMatchers("/api/products/**").authenticated()
                         .pathMatchers("/api/order-payment/**").authenticated()
                         .pathMatchers("/api/reports/**").permitAll()

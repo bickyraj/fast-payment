@@ -5,6 +5,7 @@ import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -39,8 +40,8 @@ public class SecurityConfig {
                 })
                 .authorizeHttpRequests(authorize ->
                         authorize
+                                .requestMatchers(HttpMethod.GET,"/api/products/images/**").permitAll()
                                 .requestMatchers("/api/products/create").hasRole("app_user")
-                                .requestMatchers("/api/products/images/**").hasRole("app_user")
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> {
