@@ -32,7 +32,6 @@ services:
       - 22181:2181
     networks:
       - app-network
-
   zookeeper-2:
     image: confluentinc/cp-zookeeper:7.4.4
     environment:
@@ -42,7 +41,6 @@ services:
       - 32181:2181
     networks:
       - app-network
-
   kafka-1:
     image: confluentinc/cp-kafka:7.4.4
     depends_on:
@@ -73,19 +71,6 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    networks:
-      - app-network
-  kafdrop:
-    image: obsidiandynamics/kafdrop:3.27.0
-    restart: "no"
-    ports:
-      - "9000:9000"
-    environment:
-      KAFKA_BROKERCONNECT: kafka-1:29092,kafka-2:29093
-      JVM_OPTS: "-Xms32M -Xmx64M"
-    depends_on:
-      - kafka-1
-      - kafka-2
     networks:
       - app-network
   prometheus:
@@ -160,6 +145,21 @@ services:
       - "5601:5601"
     networks:
       - app-network
+  minio:
+    image: minio/minio
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9082:9082"
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: fastpaymentadmin
+    volumes:
+      - minio-data:/data
+      - minio-config:/root/.minio
+    command: server /data --console-address ":9082"
+    networks:
+      - app-network
 networks:
   app-network:
     driver: bridge
@@ -168,3 +168,7 @@ volumes:
   grafana-storage:
   esdata:
   mongo_data:
+  minio-data:
+    driver: local
+  minio-config:
+    driver: local

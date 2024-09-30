@@ -4,9 +4,11 @@ import com.bicky.demopayment.productservice.product.domain.entity.Product;
 import com.bicky.demopayment.productservice.product.domain.entity.elastic.ElasticProduct;
 import com.bicky.demopayment.productservice.product.domain.repository.ProductRepository;
 import com.bicky.demopayment.productservice.product.domain.repository.elastic.ElasticProductRepository;
+import com.bicky.demopayment.productservice.product.infrastructure.services.ProductService;
 import lombok.*;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @RequiredArgsConstructor
@@ -16,9 +18,13 @@ public class CreateProductUseCase {
     @EqualsAndHashCode
     @ToString
     public static class Request {
-        private final Product requestBody;
+        private String name;
+        private double price;
+        private String description;
+        private MultipartFile productImage;
+
         public boolean isValid() {
-            return requestBody.getName() != null && !requestBody.getName().isBlank() && requestBody.getPrice() != 0;
+            return name != null && price != 0;
         }
     }
 
@@ -30,13 +36,14 @@ public class CreateProductUseCase {
         private final Boolean success;
     }
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
     public Response execute(Request request) {
         if (!request.isValid()) {
             return Response.of(false);
         }
-        productRepository.save(request.requestBody);
+
+        productService.saveProduct(request.name, request.price, request.description, request.productImage);
         return Response.of(true);
     }
 }

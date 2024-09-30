@@ -6,9 +6,16 @@ import com.bicky.demopayment.productservice.product.application.GetAllProductsUs
 import com.bicky.demopayment.productservice.product.application.GetElasticProductsUseCase;
 import com.bicky.demopayment.productservice.product.application.SearchProductUseCase;
 import com.bicky.demopayment.productservice.product.domain.entity.Product;
+import com.bicky.demopayment.productservice.product.entrypoint.rest.requestbody.CreateProductRequestBody;
+import com.bicky.demopayment.productservice.product.infrastructure.services.MinIOService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -22,11 +29,27 @@ public class ProductController {
     private final GetElasticProductsUseCase getElasticProductsUseCase;
     private final GetAllProductsUseCase getAllProductsUseCase;
     private final SearchProductUseCase searchProductUseCase;
+    private final MinIOService minIOService;
 
-    @PostMapping("/create")
-    public Boolean create(@RequestBody Product product) {
-        return createProductUserCase.execute(CreateProductUseCase.Request.of(product))
-                .getSuccess();
+    @PostMapping(value = "/create", consumes = "multipart/form-data")
+    public Boolean create(
+            @RequestParam("name") String name,
+            @RequestParam("price") double price,
+            @RequestParam("description") String description,
+            @RequestParam("productImage") MultipartFile productImage
+    ) {
+        CreateProductRequestBody productRequestBody = new CreateProductRequestBody();
+        productRequestBody.setName(name);
+        productRequestBody.setPrice(price);
+        productRequestBody.setDescription(description);
+        productRequestBody.setProductImage(productImage);
+        return createProductUserCase.execute(CreateProductUseCase.Request.of(
+                        productRequestBody.getName(),
+                        productRequestBody.getPrice(),
+                        productRequestBody.getDescription(),
+                        productRequestBody.getProductImage()
+            ))
+            .getSuccess();
     }
 
     @GetMapping("/elastic")
@@ -55,5 +78,17 @@ public class ProductController {
         namesSet.addAll(Arrays.asList(names2));
         namesSet.toArray(new String[0]);
         return searchProductUseCase.execute(SearchProductUseCase.Request.of(page, size, name)).getProducts();
+    }
+
+    @GetMapping("/{bucketName}/{fileName}")
+    public ResponseEntity<InputStream> getImage(@PathVariable String bucketName, @PathVariable String fileName) {
+        try {
+            InputStream imageStream = minIOService.getObject(bucketName, fileName);
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.CONTENT_TYPE, "image/webp");
+            return new ResponseEntity<>(imageStream, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
