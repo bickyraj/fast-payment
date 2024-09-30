@@ -9,9 +9,13 @@ import com.bicky.demopayment.productservice.product.domain.entity.Product;
 import com.bicky.demopayment.productservice.product.entrypoint.rest.requestbody.CreateProductRequestBody;
 import com.bicky.demopayment.productservice.product.infrastructure.services.MinIOService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -80,13 +84,35 @@ public class ProductController {
         return searchProductUseCase.execute(SearchProductUseCase.Request.of(page, size, name)).getProducts();
     }
 
-    @GetMapping("/{bucketName}/{fileName}")
-    public ResponseEntity<InputStream> getImage(@PathVariable String bucketName, @PathVariable String fileName) {
+    @GetMapping("/images/{bucketName}/{fileName}")
+    public ResponseEntity<Resource> getImage(@PathVariable String bucketName, @PathVariable String fileName) {
         try {
             InputStream imageStream = minIOService.getObject(bucketName, fileName);
+            InputStreamResource resource = new InputStreamResource(imageStream);
+            String extension = StringUtils.getFilenameExtension(fileName);
+            MediaType mediaType = MediaType.IMAGE_JPEG;
+            if (extension != null) {
+                switch (extension.toLowerCase()) {
+                    case "png":
+                        mediaType = MediaType.IMAGE_PNG;
+                        break;
+                    case "gif":
+                        mediaType = MediaType.IMAGE_GIF;
+                        break;
+                    case "webp":
+                        mediaType = MediaType.parseMediaType("image/webp");
+                        break;
+                    case "avif":
+                        mediaType = MediaType.parseMediaType("image/avif");
+                        break;
+                    // Add more cases if needed
+                }
+            }
             HttpHeaders headers = new HttpHeaders();
-            headers.set(HttpHeaders.CONTENT_TYPE, "image/webp");
-            return new ResponseEntity<>(imageStream, headers, HttpStatus.OK);
+            headers.setContentType(mediaType);
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(resource);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

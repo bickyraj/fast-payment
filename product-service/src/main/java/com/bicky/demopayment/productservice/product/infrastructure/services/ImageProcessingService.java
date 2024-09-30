@@ -1,36 +1,44 @@
 package com.bicky.demopayment.productservice.product.infrastructure.services;
 
-import lombok.RequiredArgsConstructor;
 import org.imgscalr.Scalr;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriter;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.stream.ImageOutputStream;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Iterator;
 
 @Service
 public class ImageProcessingService {
 
-    public byte[] convertToWebP(BufferedImage image) throws IOException {
-        ByteArrayOutputStream webpOutputStream = new ByteArrayOutputStream();
-        ImageWriter writer = null;
-        Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("webp");
+    public byte[] convertToJpeg(BufferedImage image) throws IOException {
+        ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
+        // Set up ImageOutputStream
+        ImageOutputStream ios = ImageIO.createImageOutputStream(jpegOutputStream);
 
-        if (writers.hasNext()) {
-            writer = writers.next();
-        } else {
-            throw new IOException("No writer found for WebP format.");
+        // Get the ImageWriter for JPEG
+        ImageWriter writer = ImageIO.getImageWritersByFormatName("jpeg").next();
+        writer.setOutput(ios);
+
+        // Write the image
+        try {
+            // Optionally set compression quality
+            javax.imageio.plugins.jpeg.JPEGImageWriteParam jpegParams =
+                    (javax.imageio.plugins.jpeg.JPEGImageWriteParam) writer.getDefaultWriteParam();
+            jpegParams.setCompressionMode(javax.imageio.ImageWriteParam.MODE_EXPLICIT);
+            jpegParams.setCompressionQuality(0.85f); // Adjust quality as needed (0.0f - 1.0f)
+
+            writer.write(null, new javax.imageio.IIOImage(image, null, (IIOMetadata) null), jpegParams);
+        } finally {
+            writer.dispose();
+            ios.close();
         }
-        boolean written = ImageIO.write(image, "webp", webpOutputStream);
-        if (!written) {
-            throw new IOException("Failed to write image in WebP format.");
-        }
-        return webpOutputStream.toByteArray();
+
+        return jpegOutputStream.toByteArray();
     }
 
     public BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {

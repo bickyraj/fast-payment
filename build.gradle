@@ -33,13 +33,6 @@ subprojects {
         }
     }
 
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        maven { url "https://repo.spring.io/milestone" }
-        maven { url "https://repo.spring.io/snapshot" }
-    }
-
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter'
         implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -67,7 +60,7 @@ subprojects {
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         // Common Lombok dependencies for all subprojects
-        compileOnly 'org.projectlombok:lombok:1.18.26'  // Or the latest version
+        implementation 'org.projectlombok:lombok:1.18.26'  // Or the latest version
         annotationProcessor 'org.projectlombok:lombok:1.18.26'
     }
 }
