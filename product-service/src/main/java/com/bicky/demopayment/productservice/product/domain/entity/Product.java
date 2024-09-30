@@ -14,4 +14,8 @@ public class Product {
     private String name;
     private double price;
     private String description;
+    private String originalImageUrl;
+    private String thumbImageUrl;
+    private String mediumImageUrl;
+    private String largeImageUrl;
 }

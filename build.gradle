@@ -54,6 +54,17 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
         implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.14.1'
 
+        implementation 'software.amazon.awssdk:s3:2.20.100'
+        implementation 'software.amazon.awssdk:auth:2.20.100'
+
+        // Image Processing Libraries
+        // TwelveMonkeys ImageIO for WebP
+        implementation 'com.twelvemonkeys.imageio:imageio-webp:3.11.0' // Check for the latest version
+        implementation 'com.twelvemonkeys.imageio:imageio-core:3.11.0'
+
+        // Image Resizing Library (imgscalr)
+        implementation 'org.imgscalr:imgscalr-lib:4.2'
+
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         // Common Lombok dependencies for all subprojects
         compileOnly 'org.projectlombok:lombok:1.18.26'  // Or the latest version
