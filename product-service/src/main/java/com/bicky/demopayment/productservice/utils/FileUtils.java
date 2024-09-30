@@ -1,5 +1,7 @@
 package com.bicky.demopayment.productservice.utils;
 
+import org.springframework.util.StringUtils;
+
 import java.nio.file.Paths;
 import java.util.regex.Pattern;
 
@@ -8,6 +10,7 @@ public class FileUtils {
 
     public static String sanitizeFileName(String fileName) {
         String sanitized = Paths.get(fileName).getFileName().toString();
+        sanitized = StringUtils.stripFilenameExtension(sanitized);
         sanitized = ILLEGAL_CHARACTERS.matcher(sanitized).replaceAll("_");
         if (sanitized.length() > 255) {
             sanitized = sanitized.substring(0, 255);

@@ -58,7 +58,7 @@ public class ProductService {
         }
 
         // Convert to WebP format
-        byte[] webpData = imageProcessingService.convertToWebP(originalImage);
+        byte[] jpegData = imageProcessingService.convertToJpeg(originalImage);
 
         // Generate different sizes
         BufferedImage thumbnail = imageProcessingService.resizeImage(originalImage, 150, 150);
@@ -66,23 +66,23 @@ public class ProductService {
         BufferedImage large = imageProcessingService.resizeImage(originalImage, 1000, 1000);
 
         // Convert resized images to WebP
-        byte[] thumbData = imageProcessingService.convertToWebP(thumbnail);
-        byte[] mediumData = imageProcessingService.convertToWebP(medium);
-        byte[] largeData = imageProcessingService.convertToWebP(large);
+        byte[] thumbData = imageProcessingService.convertToJpeg(thumbnail);
+        byte[] mediumData = imageProcessingService.convertToJpeg(medium);
+        byte[] largeData = imageProcessingService.convertToJpeg(large);
 
         // Upload to MinIO
-        minIOService.uploadFile(PRODUCT_BUCKET_IMAGE, objectKey + "_thumbnail.webp", thumbData, "image/webp");
-        minIOService.uploadFile(PRODUCT_BUCKET_IMAGE, objectKey + "_medium.webp", mediumData, "image/webp");
-        minIOService.uploadFile(PRODUCT_BUCKET_IMAGE, objectKey + "_large.webp", largeData, "image/webp");
-        minIOService.uploadFile(PRODUCT_BUCKET_IMAGE, objectKey + ".webp", webpData, "image/webp");
+        minIOService.uploadFile(PRODUCT_BUCKET_IMAGE, objectKey + "_thumbnail.jpeg", thumbData, "image/jpeg");
+        minIOService.uploadFile(PRODUCT_BUCKET_IMAGE, objectKey + "_medium.jpeg", mediumData, "image/jpeg");
+        minIOService.uploadFile(PRODUCT_BUCKET_IMAGE, objectKey + "_large.jpeg", largeData, "image/jpeg");
+        minIOService.uploadFile(PRODUCT_BUCKET_IMAGE, objectKey + ".jpeg", jpegData, "image/jpeg");
 
         // Construct image URLs (adjust based on your MinIO access configuration)
         Map<String, String> imageUrls = new HashMap<>();
-        String baseUrl = "http://localhost:8080/images/" + PRODUCT_BUCKET_IMAGE + "/"; // Update host and port as needed
-        imageUrls.put("thumbnail", baseUrl + objectKey + "_thumbnail.webp");
-        imageUrls.put("medium", baseUrl + objectKey + "_medium.webp");
-        imageUrls.put("large", baseUrl + objectKey + "_large.webp");
-        imageUrls.put("original", baseUrl + objectKey + ".webp");
+        String baseUrl = "http://localhost:8080/api/products/images/" + PRODUCT_BUCKET_IMAGE + "/"; // Update host and port as needed
+        imageUrls.put("thumbnail", baseUrl + objectKey + "_thumbnail.jpeg");
+        imageUrls.put("medium", baseUrl + objectKey + "_medium.jpeg");
+        imageUrls.put("large", baseUrl + objectKey + "_large.jpeg");
+        imageUrls.put("original", baseUrl + objectKey + ".jpeg");
         return imageUrls;
     }
 }
