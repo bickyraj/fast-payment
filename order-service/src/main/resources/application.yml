@@ -1,32 +1,27 @@
-server:
-  port: 7074
 spring:
   application:
-    name: order-payment-service
+    name: order-service
   datasource:
     url: jdbc:postgresql://localhost:5432/demospring_db
     username: admin
     password: admin
     driver-class-name: org.postgresql.Driver
+
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        use_sql_comments: true
+      ddl-auto: update  # Options: validate | update | create | create-drop
+
   security:
     oauth2:
       client:
         registration:
           keycloak:
             client-id: fast-payment
-            client-secret: YV7BQhesXAof0e0vgHdXZc4tkddJ4Zby
+            client-secret: 3dUyOoZlIakzZiZ3QqPyIA73dcFC3Z5D
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-            scope: openid,profile,email
+            scope: "openid,profile,email"
         provider:
           keycloak:
             issuer-uri: http://localhost:9065/realms/fast-payment
@@ -37,38 +32,29 @@ spring:
         jwt:
           issuer-uri: http://localhost:9065/auth/realms/fast-payment
           jwk-set-uri: http://localhost:9065/auth/realms/fast-payment/protocol/openid-connect/certs
+
 logging:
   level:
-    org:
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: OFF
-        orm:
-          jdbc:
-            bind: OFF
-      springframework:
-        security: DEBUG
+    org.springframework.security: DEBUG
 
 keycloak:
   realm: fast-payment
   auth-server-url: http://localhost:9065
   resource: fast-payment
   credentials:
-    secret: YV7BQhesXAof0e0vgHdXZc4tkddJ4Zby
+    secret: 3dUyOoZlIakzZiZ3QqPyIA73dcFC3Z5D
   public-client: true
   use-resource-role-mappings: true
 
 eureka:
   client:
-    service-url:
+    serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+    registerWithEureka: true  # Ensures the service registers with Eureka
+    fetchRegistry: true        # Fetches the registry from Eureka
 
-stripe:
-  api:
-    key: sk_test_51M9wCfHl4wh1J75PpOTcu0CneG3UE2Cn9jn85LLuzdW1ZqYod0VOFIdLXTQteIJiIY3KcApmrL3nftbHqd2MagEk00A8z8sSyf
+server:
+  port: 7072  # Port on which the application will run
 
 management:
   tracing:

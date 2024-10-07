@@ -10,7 +10,6 @@ ext {
 
 dependencies {
     implementation 'io.micrometer:micrometer-registry-prometheus'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.keycloak', module: 'keycloak-spring-boot-starter'
     }
