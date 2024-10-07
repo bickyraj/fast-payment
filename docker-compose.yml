@@ -1,4 +1,3 @@
-version: '2'
 services:
   postgres:
     image: postgres:13
@@ -114,6 +113,8 @@ services:
     command: [ "start-dev" ]
     networks:
       - app-network
+    volumes:
+      - keycloak_data:/opt/jboss/keycloak/standalone/data
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.0.0
     container_name: elasticsearch
@@ -160,10 +161,18 @@ services:
     command: server /data --console-address ":9082"
     networks:
       - app-network
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - app-network
 networks:
   app-network:
     driver: bridge
 volumes:
+  keycloak_data:
   postgres-data:
   grafana-storage:
   esdata:

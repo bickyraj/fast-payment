@@ -19,12 +19,12 @@ spring.elasticsearch.uris=http://localhost:9200
 keycloak.realm=fast-payment
 keycloak.auth-server-url=http://localhost:9065
 keycloak.resource=fast-payment
-keycloak.credentials.secret=cGOXOX4xvq9jkG1olHgoVUeKBjCiLl3p
+keycloak.credentials.secret=3dUyOoZlIakzZiZ3QqPyIA73dcFC3Z5D
 keycloak.public-client=true
 keycloak.use-resource-role-mappings=true
 
 spring.security.oauth2.client.registration.keycloak.client-id=fast-payment
-spring.security.oauth2.client.registration.keycloak.client-secret=cGOXOX4xvq9jkG1olHgoVUeKBjCiLl3p
+spring.security.oauth2.client.registration.keycloak.client-secret=3dUyOoZlIakzZiZ3QqPyIA73dcFC3Z5D
 spring.security.oauth2.client.registration.keycloak.authorization-grant-type=authorization_code
 spring.security.oauth2.client.registration.keycloak.redirect-uri={baseUrl}/login/oauth2/code/{registrationId}
 spring.security.oauth2.client.registration.keycloak.scope=openid,profile,email
@@ -48,3 +48,7 @@ minio.endpoint=http://localhost:9000
 minio.access-key=IRFfzxAIqS8V6tGSR5Ml
 minio.secret-key=dfLqi2GKyhAv7Q17NbzOtVKpuwoGWcPGuybFLmjk
 minio.region=us-east-1
+
+spring.sleuth.sampler.probability=1.0
+spring.zipkin.enabled=true
+spring.zipkin.base-url=http://zipkin:9411/

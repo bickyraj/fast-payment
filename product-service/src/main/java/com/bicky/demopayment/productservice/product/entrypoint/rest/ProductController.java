@@ -9,6 +9,7 @@ import com.bicky.demopayment.productservice.product.domain.entity.Product;
 import com.bicky.demopayment.productservice.product.entrypoint.rest.requestbody.CreateProductRequestBody;
 import com.bicky.demopayment.productservice.product.infrastructure.services.MinIOService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +29,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
+@Slf4j
 public class ProductController {
     private final CreateProductUseCase createProductUserCase;
     private final GetElasticProductsUseCase getElasticProductsUseCase;
@@ -42,6 +44,7 @@ public class ProductController {
             @RequestParam("description") String description,
             @RequestParam("productImage") MultipartFile productImage
     ) {
+        log.info("Create product: {}", name);
         CreateProductRequestBody productRequestBody = new CreateProductRequestBody();
         productRequestBody.setName(name);
         productRequestBody.setPrice(price);
