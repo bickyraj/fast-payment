@@ -8,6 +8,7 @@ import com.bicky.demopayment.productservice.product.application.SearchProductUse
 import com.bicky.demopayment.productservice.product.domain.entity.Product;
 import com.bicky.demopayment.productservice.product.entrypoint.rest.requestbody.CreateProductRequestBody;
 import com.bicky.demopayment.productservice.product.infrastructure.services.MinIOService;
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
@@ -65,6 +66,10 @@ public class ProductController {
     }
 
     @GetMapping
+    @Observed(
+            name = "user.name",
+            lowCardinalityKeyValues = {"userType", "userType2"}
+    )
     public List<Product> getAllProducts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "2") int size
