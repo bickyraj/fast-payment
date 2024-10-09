@@ -16,10 +16,6 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/api/users/**
-        - id: frontend-service
-          uri: lb://frontend-service
-          predicates:
-            - Path=/fast-payment/**
         - id: order-service
           uri: lb://order-service
           predicates:
