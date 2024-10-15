@@ -1,10 +1,7 @@
 package com.bicky.demopayment.productservice.product.entrypoint.rest;
 
 import com.bicky.demopayment.productservice.common.pagination.PageResponse;
-import com.bicky.demopayment.productservice.product.application.CreateProductUseCase;
-import com.bicky.demopayment.productservice.product.application.GetAllProductsUseCase;
-import com.bicky.demopayment.productservice.product.application.GetElasticProductsUseCase;
-import com.bicky.demopayment.productservice.product.application.SearchProductUseCase;
+import com.bicky.demopayment.productservice.product.application.*;
 import com.bicky.demopayment.productservice.product.domain.entity.Product;
 import com.bicky.demopayment.productservice.product.entrypoint.rest.requestbody.CreateProductRequestBody;
 import com.bicky.demopayment.productservice.product.infrastructure.services.MinIOService;
@@ -13,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +24,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Filter;
 
 @RestController
 @RequestMapping("/api/products")
@@ -37,6 +36,7 @@ public class ProductController {
     private final GetAllProductsUseCase getAllProductsUseCase;
     private final SearchProductUseCase searchProductUseCase;
     private final MinIOService minIOService;
+    private final FilterProductUseCase filterProductUseCase;
 
     @PostMapping(value = "/create", consumes = "multipart/form-data")
     public Boolean create(
@@ -124,5 +124,22 @@ public class ProductController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<Page<Product>> filterProduct(
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "page", required = false) Integer page,
+            @RequestParam(name = "pageSize", required = false) Integer pageSize,
+            @RequestParam(name = "sortBy", required = false) String sortBy
+    ) {
+        FilterProductUseCase.Response response = filterProductUseCase.execute(
+                FilterProductUseCase.Request.of(
+                        name,
+                        page,
+                        pageSize,
+                        sortBy
+                ));
+        return new ResponseEntity<>(response.getProducts(), HttpStatus.OK);
     }
 }
