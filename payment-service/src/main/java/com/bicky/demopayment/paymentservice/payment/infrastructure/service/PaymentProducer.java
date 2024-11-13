@@ -1,6 +1,6 @@
 package com.bicky.demopayment.paymentservice.payment.infrastructure.service;
 
-import com.bicky.demopayment.sharedmodule.dto.PaymentEvent;
+import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;

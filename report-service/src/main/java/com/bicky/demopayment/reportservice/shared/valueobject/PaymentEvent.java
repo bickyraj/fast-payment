@@ -1,4 +1,4 @@
-package com.bicky.demopayment.sharedmodule.dto;
+package com.bicky.demopayment.reportservice.shared.valueobject;
 
 import lombok.*;
 

@@ -1,4 +1,22 @@
 services:
+#  api-gateway-service:
+#    build:
+#      context: ./api-gateway
+#    container_name: api-gateway-service
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - config-server
+#    networks:
+#      - app-network
+#  config-server:
+#    build:
+#      context: ./config-server
+#    container_name: config-server-service
+#    ports:
+#      - "8888:8888"
+#    networks:
+#      - app-network
   postgres:
     image: postgres:13
     environment:

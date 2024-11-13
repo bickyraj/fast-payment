@@ -7,6 +7,8 @@
 
 ## Project Setup
 
+    gradle wrapper --gradle-version 8.8
+
     ./gradlew clean build
 
 ## Setup Docker

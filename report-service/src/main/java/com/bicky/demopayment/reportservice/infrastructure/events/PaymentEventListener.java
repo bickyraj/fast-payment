@@ -2,7 +2,7 @@ package com.bicky.demopayment.reportservice.infrastructure.events;
 
 import com.bicky.demopayment.reportservice.domain.entity.Purchase;
 import com.bicky.demopayment.reportservice.domain.repository.PurchaseRepository;
-import com.bicky.demopayment.sharedmodule.dto.PaymentEvent;
+import com.bicky.demopayment.reportservice.shared.valueobject.PaymentEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;

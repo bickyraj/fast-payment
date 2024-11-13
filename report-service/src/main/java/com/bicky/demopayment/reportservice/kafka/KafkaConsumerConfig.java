@@ -1,8 +1,7 @@
 package com.bicky.demopayment.reportservice.kafka;
 
-import com.bicky.demopayment.sharedmodule.dto.PaymentEvent;
+import com.bicky.demopayment.reportservice.shared.valueobject.PaymentEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;

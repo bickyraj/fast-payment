@@ -3,7 +3,7 @@ package com.bicky.demopayment.paymentservice.payment.application;
 import com.bicky.demopayment.paymentservice.payment.domain.entity.Payment;
 import com.bicky.demopayment.paymentservice.payment.infrastructure.service.PaymentProducer;
 import com.bicky.demopayment.paymentservice.payment.infrastructure.service.PaymentService;
-import com.bicky.demopayment.sharedmodule.dto.PaymentEvent;
+import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentEvent;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

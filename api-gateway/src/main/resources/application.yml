@@ -48,7 +48,7 @@ spring:
         registration:
           keycloak:
             client-id: fast-payment
-            client-secret: 3dUyOoZlIakzZiZ3QqPyIA73dcFC3Z5D
+            client-secret: 1soSF6yffLv8X23rqgqWQQ5eh5Tw686i
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: openid, profile, email
