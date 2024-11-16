@@ -94,6 +94,8 @@ services:
       - postgres
       - minio
       - elasticsearch
+      - kafka-1
+      - kafka-2
     networks:
       - app-network
   payment-service:
@@ -111,6 +113,8 @@ services:
       - postgres
       - minio
       - elasticsearch
+      - kafka-1
+      - kafka-2
     networks:
       - app-network
   eureka:

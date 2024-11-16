@@ -22,7 +22,8 @@ spring:
       resourceserver:
         jwt:
           issuer-uri:  http://localhost:9065/auth/realms/fast-payment
-          jwk-set-uri:  http://localhost:9065/auth/realms/fast-payment/protocol/openid-connect/certs
+#          jwk-set-uri:  http://localhost:9065/auth/realms/fast-payment/protocol/openid-connect/certs
+          jwk-set-uri:  http://localhost:9065/realms/fast-payment/protocol/openid-connect/certs
   kafka:
     bootstrap-servers: localhost:29092,localhost:39092
     producer:
