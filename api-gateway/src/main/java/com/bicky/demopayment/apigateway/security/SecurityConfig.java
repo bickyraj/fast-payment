@@ -1,5 +1,6 @@
 package com.bicky.demopayment.apigateway.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -25,6 +26,9 @@ import java.util.stream.Collectors;
 @EnableReactiveMethodSecurity
 public class SecurityConfig {
 
+    @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
+    private String jwkSetUri;
+
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
@@ -46,8 +50,11 @@ public class SecurityConfig {
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwtSpec ->
-                                jwtSpec.jwtAuthenticationConverter(jwtAuthenticationConverter())));
+                        .jwt(jwtSpec -> {
+                                    jwtSpec.jwkSetUri(jwkSetUri);
+                                    jwtSpec.jwtAuthenticationConverter(jwtAuthenticationConverter());
+                                }
+                            ));
         return http.build();
     }
 

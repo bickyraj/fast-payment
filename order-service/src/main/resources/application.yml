@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: native
   application:
     name: order-service
   config:

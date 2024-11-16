@@ -1,5 +1,6 @@
 package com.bicky.demopayment.orderservice.keycloak;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -27,6 +28,9 @@ import java.util.stream.Collectors;
 @EnableWebSecurity
 @EnableMethodSecurity()
 public class SecurityConfig {
+    @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
+    private String jwkSetUri;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, Converter<Jwt, AbstractAuthenticationToken> authenticationConverter) throws Exception {
         http
@@ -41,7 +45,7 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> {
-                    jwt.jwkSetUri("http://localhost:9065/realms/fast-payment/protocol/openid-connect/certs");
+                    jwt.jwkSetUri(jwkSetUri);
                     jwt.jwtAuthenticationConverter(authenticationConverter(realmRolesAuthoritiesConverter()));
                 }));
         return http.build();

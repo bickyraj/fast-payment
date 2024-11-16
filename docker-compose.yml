@@ -1,24 +1,137 @@
 services:
-#  api-gateway-service:
-#    build:
-#      context: ./api-gateway
-#    container_name: api-gateway-service
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - config-server
-#    networks:
-#      - app-network
-#  config-server:
-#    build:
-#      context: ./config-server
-#    container_name: config-server-service
-#    ports:
-#      - "8888:8888"
-#    networks:
-#      - app-network
+  api-gateway-service:
+    build:
+      context: ./api-gateway
+    container_name: api-gateway-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8080:8080"
+    depends_on:
+      - config-server
+      - eureka
+      - keycloak
+    networks:
+      - app-network
+  user-service:
+    build:
+      context: ./user-service
+    container_name: user-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "3030:3030"
+    depends_on:
+      - config-server
+      - eureka
+      - keycloak
+      - postgres
+    networks:
+      - app-network
+  product-service:
+    build:
+      context: ./product-service
+    container_name: product-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "7071:7071"
+    depends_on:
+      - config-server
+      - eureka
+      - keycloak
+      - postgres
+      - minio
+      - elasticsearch
+    networks:
+      - app-network
+  order-service:
+    build:
+      context: ./order-service
+    container_name: order-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "7072:7072"
+    depends_on:
+      - config-server
+      - eureka
+      - keycloak
+      - postgres
+      - minio
+      - elasticsearch
+    networks:
+      - app-network
+  order-payment-service:
+    build:
+      context: ./order-payment-service
+    container_name: order-payment-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "7074:7074"
+    depends_on:
+      - config-server
+      - eureka
+      - keycloak
+      - postgres
+      - minio
+      - elasticsearch
+    networks:
+      - app-network
+  report-service:
+    build:
+      context: ./report-service
+    container_name: report-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "7026:7026"
+    depends_on:
+      - config-server
+      - eureka
+      - keycloak
+      - postgres
+      - minio
+      - elasticsearch
+    networks:
+      - app-network
+  payment-service:
+    build:
+      context: ./payment-service
+    container_name: payment-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "7073:7073"
+    depends_on:
+      - config-server
+      - eureka
+      - keycloak
+      - postgres
+      - minio
+      - elasticsearch
+    networks:
+      - app-network
+  eureka:
+    build:
+      context: ./service-registry
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+  config-server:
+    build:
+      context: ./config-server
+    container_name: config-server-service
+    ports:
+      - "8888:8888"
+    networks:
+      - app-network
   postgres:
     image: postgres:13
+    container_name: postgres
     environment:
       POSTGRES_DB: demospring_db
       POSTGRES_USER: admin
@@ -126,8 +239,9 @@ services:
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_PORT: 9065
     ports:
-      - "9065:8080"
+      - "9065:9065"
     command: [ "start-dev" ]
     networks:
       - app-network

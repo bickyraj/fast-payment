@@ -1,6 +1,6 @@
 spring:
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
 
   datasource:
@@ -20,20 +20,21 @@ spring:
         registration:
           keycloak:
             client-id: fast-payment
-            client-secret: 1soSF6yffLv8X23rqgqWQQ5eh5Tw686i
+            client-secret: XDOu8eVWloZmlc4Qt9wwRFvzfVN3pvzp
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: openid,profile,email
         provider:
           keycloak:
-            issuer-uri: http://localhost:9065/realms/fast-payment
-            user-info-uri: http://localhost:9065/realms/fast-payment/protocol/openid-connect/userinfo
-            token-uri: http://localhost:9065/realms/fast-payment/protocol/openid-connect/token
-            authorization-uri: http://localhost:9065/realms/fast-payment/protocol/openid-connect/auth
+            issuer-uri:  http://localhost:9065/realms/fast-payment
+            user-info-uri:  http://localhost:9065/realms/fast-payment/protocol/openid-connect/userinfo
+            token-uri:  http://localhost:9065/realms/fast-payment/protocol/openid-connect/token
+            authorization-uri:  http://localhost:9065/realms/fast-payment/protocol/openid-connect/auth
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9065/auth/realms/fast-payment
-          jwk-set-uri: http://localhost:9065/auth/realms/fast-payment/protocol/openid-connect/certs
+          issuer-uri:  http://localhost:9065/auth/realms/fast-payment
+#          jwk-set-uri:  http://localhost:9065/auth/realms/fast-payment/protocol/openid-connect/certs
+          jwk-set-uri:  http://localhost:9065/realms/fast-payment/protocol/openid-connect/certs
 logging:
   level:
     org:
@@ -42,10 +43,10 @@ logging:
 
 keycloak:
   realm: fast-payment
-  auth-server-url: http://localhost:9065
+  auth-server-url:  http://localhost:9065
   resource: fast-payment
   credentials:
-    secret: 1soSF6yffLv8X23rqgqWQQ5eh5Tw686i
+    secret: XDOu8eVWloZmlc4Qt9wwRFvzfVN3pvzp
   public-client: true
   use-resource-role-mappings: true
 

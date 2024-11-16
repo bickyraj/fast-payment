@@ -33,7 +33,6 @@ dependencies {
     implementation 'org.springframework.security:spring-security-oauth2-resource-server'
     implementation 'org.springframework.security:spring-security-oauth2-jose'
     implementation 'org.apache.camel.springboot:camel-spring-boot-starter:4.0.2'
-    implementation 'com.bicky:fast-payment-contracts:1.0.0'
     implementation 'com.google.protobuf:protobuf-java:3.19.1'
     implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.14.1'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'

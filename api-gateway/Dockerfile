@@ -1,17 +1,24 @@
-# Use a base image with OpenJDK (Java 17 in this case)
+# Use a base image with OpenJDK 17
 FROM openjdk:17-jdk-slim
 
-# Set the working directory in the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the entire project into the container (including the parent `build.gradle`)
+# Copy the Gradle wrapper and related files for caching
+COPY gradlew .
+COPY gradle/ gradle/
+
+# Add execution permissions to the Gradle wrapper
+RUN chmod +x ./gradlew
+
+# Copy the rest of the project files to the container
 COPY . .
 
-# Install Gradle (if you are not using the wrapper, otherwise use the wrapper script)
+# Build the project using the Gradle wrapper (runs in the /app directory)
 RUN ./gradlew build --no-daemon
 
-# Expose the port that the service will run on
-EXPOSE 8761
+# Expose the port the config server will run on (default for Eureka is 8761)
+EXPOSE 8080
 
-# Run the service (e.g., Eureka service)
-CMD ["java", "-jar", "build/libs/api-gateway-service.jar"]
+# Run the application using the built JAR file (replace with your actual JAR name if necessary)
+CMD ["java", "-jar", "build/libs/api-gateway-1.0-SNAPSHOT.jar"]

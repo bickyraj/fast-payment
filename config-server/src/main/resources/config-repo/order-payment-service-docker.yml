@@ -1,0 +1,83 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/demospring_db
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: fast-payment
+            client-secret: YV7BQhesXAof0e0vgHdXZc4tkddJ4Zby
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid,profile,email
+        provider:
+          keycloak:
+            issuer-uri: http://keycloak:9065/realms/fast-payment
+            user-info-uri: http://keycloak:9065/realms/fast-payment/protocol/openid-connect/userinfo
+            token-uri: http://keycloak:9065/realms/fast-payment/protocol/openid-connect/token
+            authorization-uri: http://keycloak:9065/realms/fast-payment/protocol/openid-connect/auth
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:9065/auth/realms/fast-payment
+#          jwk-set-uri: http://keycloak:9065/auth/realms/fast-payment/protocol/openid-connect/certs
+          jwk-set-uri:  http://keycloak:9065/realms/fast-payment/protocol/openid-connect/certs
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: OFF
+        orm:
+          jdbc:
+            bind: OFF
+      springframework:
+        security: DEBUG
+
+keycloak:
+  realm: fast-payment
+  auth-server-url: http://keycloak:9065
+  resource: fast-payment
+  credentials:
+    secret: YV7BQhesXAof0e0vgHdXZc4tkddJ4Zby
+  public-client: true
+  use-resource-role-mappings: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka/
+
+stripe:
+  api:
+    key: sk_test_51M9wCfHl4wh1J75PpOTcu0CneG3UE2Cn9jn85LLuzdW1ZqYod0VOFIdLXTQteIJiIY3KcApmrL3nftbHqd2MagEk00A8z8sSyf
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
