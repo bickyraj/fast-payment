@@ -82,7 +82,7 @@ keycloak:
   auth-server-url:  http://localhost:9065
   resource: fast-payment
   credentials:
-    secret: YV7BQhesXAof0e0vgHdXZc4tkddJ4Zby
+    secret: KvZYYX4Lgp1QYTEUuRNS40EwD1CYq9mS
   public-client: true
   use-resource-role-mappings: true
 

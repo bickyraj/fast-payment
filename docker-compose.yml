@@ -96,6 +96,7 @@ services:
       - elasticsearch
       - kafka-1
       - kafka-2
+      - mongodb
     networks:
       - app-network
   payment-service:
@@ -252,23 +253,15 @@ services:
     volumes:
       - keycloak_data:/opt/jboss/keycloak/standalone/data
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.0.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.0
     container_name: elasticsearch
     environment:
-      - node.name=es01
-      - cluster.name=docker-cluster
-      - discovery.type=single-node
-      - xpack.security.enabled=false
-      - xpack.security.http.ssl.enabled=false
-      - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node  # Use single-node discovery
+      - xpack.security.enabled=false
     ports:
       - "9200:9200"
       - "9300:9300"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
     networks:
       - app-network
     volumes:
