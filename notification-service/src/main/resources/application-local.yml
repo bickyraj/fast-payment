@@ -1,0 +1,31 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:39092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: report-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+  mail:
+    host: smtp.mailtrap.io
+    port: 2525
+    username: 729d295fad6e2f
+    password: 34ca745151d323
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+logging:
+  level:
+    org.springframework.boot.autoconfigure.mail: DEBUG
+
+server:
+  port: 7022

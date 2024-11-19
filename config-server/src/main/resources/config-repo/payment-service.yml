@@ -44,7 +44,7 @@ spring:
           issuer-uri:  http://localhost:9065/realms/fast-payment
           jwk-set-uri:  http://localhost:9065/realms/fast-payment/protocol/openid-connect/certs
   kafka:
-    bootstrap-servers: localhost:29092,localhost:39092
+    bootstrap-servers: localhost:39092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

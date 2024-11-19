@@ -40,6 +40,10 @@ spring:
           uri: lb://report-service
           predicates:
             - Path=/api/reports/**
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/notification/**
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
   security:
