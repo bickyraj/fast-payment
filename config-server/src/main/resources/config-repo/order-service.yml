@@ -16,7 +16,7 @@ spring:
         registration:
           keycloak:
             client-id: fast-payment
-            client-secret: XDOu8eVWloZmlc4Qt9wwRFvzfVN3pvzp
+            client-secret: B5AROsL8nOKhoyjTS1X8jTmwKxJDyFb9
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: "openid,profile,email"
@@ -28,8 +28,7 @@ spring:
             authorization-uri: http://localhost:9065/realms/fast-payment/protocol/openid-connect/auth
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9065/auth/realms/fast-payment
-#          jwk-set-uri: http://localhost:9065/auth/realms/fast-payment/protocol/openid-connect/certs
+          issuer-uri: http://localhost:9065/realms/fast-payment
           jwk-set-uri:  http://localhost:9065/realms/fast-payment/protocol/openid-connect/certs
 logging:
   level:
@@ -40,7 +39,7 @@ keycloak:
   auth-server-url: http://localhost:9065
   resource: fast-payment
   credentials:
-    secret: XDOu8eVWloZmlc4Qt9wwRFvzfVN3pvzp
+    secret: B5AROsL8nOKhoyjTS1X8jTmwKxJDyFb9
   public-client: true
   use-resource-role-mappings: true
 

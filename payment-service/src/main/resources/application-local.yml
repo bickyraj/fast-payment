@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: payment-service
   mvc:
     view:
       prefix: /WEB-INF/views
@@ -10,7 +12,7 @@ spring:
     enabled: true
     mode: HTML
   datasource:
-    url: jdbc:postgresql://postgres:5432/demospring_db
+    url: jdbc:postgresql://localhost:5432/demospring_db
     username: admin
     password: admin
     driver-class-name: org.postgresql.Driver
@@ -35,17 +37,16 @@ spring:
             scope: openid,profile,email
         provider:
           keycloak:
-            issuer-uri: http://keycloak:9065/realms/fast-payment
-            user-info-uri: http://keycloak:9065/realms/fast-payment/protocol/openid-connect/userinfo
-            token-uri: http://keycloak:9065/realms/fast-payment/protocol/openid-connect/token
-            authorization-uri: http://keycloak:9065/realms/fast-payment/protocol/openid-connect/auth
+            issuer-uri:  http://localhost:9065/realms/fast-payment
+            user-info-uri:  http://localhost:9065/realms/fast-payment/protocol/openid-connect/userinfo
+            token-uri:  http://localhost:9065/realms/fast-payment/protocol/openid-connect/token
+            authorization-uri:  http://localhost:9065/realms/fast-payment/protocol/openid-connect/auth
       resourceserver:
         jwt:
-          issuer-uri: http://keycloak:9065/auth/realms/fast-payment
-#          jwk-set-uri: http://keycloak:9065/auth/realms/fast-payment/protocol/openid-connect/certs
-          jwk-set-uri:  http://keycloak:9065/realms/fast-payment/protocol/openid-connect/certs
+          issuer-uri:  http://localhost:9065/realms/fast-payment
+          jwk-set-uri:  http://localhost:9065/realms/fast-payment/protocol/openid-connect/certs
   kafka:
-    bootstrap-servers: kafka-2:9092
+    bootstrap-servers: localhost:29092,localhost:39092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -80,7 +81,7 @@ logging:
 
 keycloak:
   realm: fast-payment
-  auth-server-url: http://keycloak:9065
+  auth-server-url:  http://localhost:9065
   resource: fast-payment
   credentials:
     secret: B5AROsL8nOKhoyjTS1X8jTmwKxJDyFb9
@@ -90,7 +91,7 @@ keycloak:
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
 
 stripe:
   api:
@@ -113,3 +114,5 @@ management:
         http:
           server:
             requests: true
+server:
+  port: 7073

@@ -9,7 +9,7 @@ spring:
         registration:
           keycloak:
             client-id: fast-payment
-            client-secret: XDOu8eVWloZmlc4Qt9wwRFvzfVN3pvzp
+            client-secret: B5AROsL8nOKhoyjTS1X8jTmwKxJDyFb9
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: openid,profile,email
@@ -21,11 +21,10 @@ spring:
             authorization-uri: http://keycloak:9065/realms/fast-payment/protocol/openid-connect/auth
       resourceserver:
         jwt:
-          issuer-uri: http://keycloak:9065/auth/realms/fast-payment
-#          jwk-set-uri: http://keycloak:9065/auth/realms/fast-payment/protocol/openid-connect/certs
+          issuer-uri: http://keycloak:9065/realms/fast-payment
           jwk-set-uri:  http://keycloak:9065/realms/fast-payment/protocol/openid-connect/certs
   kafka:
-    bootstrap-servers: kafka-1:29092,kafka-2:39092
+    bootstrap-servers: kafka-2:9092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -56,7 +55,7 @@ keycloak:
   auth-server-url: http://keycloak:9065
   resource: fast-payment
   credentials:
-    secret: KvZYYX4Lgp1QYTEUuRNS40EwD1CYq9mS
+    secret: B5AROsL8nOKhoyjTS1X8jTmwKxJDyFb9
   public-client: true
   use-resource-role-mappings: true
 

@@ -12,6 +12,7 @@ public class PaymentProducer {
     private final KafkaTemplate<String, PaymentEvent> kafkaTemplate;
 
     public void sendPaymentMessage(PaymentEvent paymentEvent) {
+        System.out.println("after payment");
         System.out.println(paymentEvent);
         kafkaTemplate.send(PAYMENT_TOPIC, paymentEvent);
     }
