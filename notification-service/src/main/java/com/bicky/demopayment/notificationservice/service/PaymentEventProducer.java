@@ -11,6 +11,7 @@ public class PaymentEventProducer {
     private static final String TOPIC = "payment-topic"; // Define the topic name
 
     public PaymentEventProducer(KafkaTemplate<String, PaymentEvent> kafkaTemplate) {
+        // new topic
         this.kafkaTemplate = kafkaTemplate;
     }
 
