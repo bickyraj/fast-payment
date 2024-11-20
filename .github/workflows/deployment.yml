@@ -7,13 +7,11 @@ on:
       - main  # Trigger on push to main branch
     paths:
       - 'notification-service/**'  # Only trigger when changes happen in this directory
-  # Ignore changes to Kubernetes deployment.yaml to avoid triggering this workflow again
   push:
     branches:
       - main
     paths-ignore:
       - 'k8/**'  # Ignore changes to Kubernetes-related files
-
 jobs:
   build:
     runs-on: ubuntu-latest
