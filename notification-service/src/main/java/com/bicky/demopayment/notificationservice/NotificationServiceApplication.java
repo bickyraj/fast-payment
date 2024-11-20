@@ -12,7 +12,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class NotificationServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(NotificationServiceApplication.class, args);
-        System.out.println("hello new world");
+        System.out.println("hello news world");
     }
 
 //    @EventListener(ApplicationReadyEvent.class)
