@@ -21,5 +21,4 @@ RUN ./gradlew clean build --no-daemon
 EXPOSE 8761
 
 # Run the application using the built JAR file (replace with your actual JAR name if necessary)
-COPY build/libs/service-registry-*.jar service-registry.jar
-CMD ["java", "-jar", "service-registry.jar"]
+CMD ["java", "-jar", "service-registry-1.0-SNAPSHOT.jar"]
