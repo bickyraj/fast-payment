@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: service-registry
-        image: bickyrajkayastha/fast-payment-service-registry:29847022dc9397653ac06a266bca7de47e8992fd
+        image: bickyrajkayastha/fast-payment-service-registry:c235812db81a17d6b68cdfc2e9151c11d710c599
         imagePullPolicy: Always
         ports:
         - containerPort: 8761
