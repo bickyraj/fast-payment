@@ -7,6 +7,12 @@ on:
       - main  # Trigger on push to main branch
     paths:
       - 'notification-service/**'  # Only trigger when changes happen in this directory
+  # Ignore changes to Kubernetes deployment.yaml to avoid triggering this workflow again
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'k8/**'  # Ignore changes to Kubernetes-related files
 
 jobs:
   build:
@@ -39,4 +45,19 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/fast-payment-notification-service:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/fast-payment-notification-service:${{ github.sha }}
+      
+      # Step 6: Update Kubernetes Deployment YAML with SHA-tagged image
+      - name: Update Kubernetes Deployment with new image SHA tag
+        run: |
+          # Replace the image tag in the deployment YAML with the new SHA
+          sed -i 's|image: .*fast-payment-notification-service:.*|image: ${{ secrets.DOCKER_USERNAME }}/fast-payment-notification-service:${{ github.sha }}|' k8/notification/deployment.yaml
+
+      # Step 7: Commit and push the updated Kubernetes YAML file
+      - name: Commit the changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add k8/notification/deployment.yaml
+          git commit -m "Update notification-service image to ${GITHUB_SHA}"
+          git push
 
