@@ -20,5 +20,8 @@ RUN ./gradlew clean build --no-daemon
 # Expose the port the config server will run on (default for Eureka is 8761)
 EXPOSE 8761
 
-# Run the application using the built JAR file (replace with your actual JAR name if necessary)
-CMD ["java", "-jar", "service-registry-1.0-SNAPSHOT.jar"]
+# Copy the built JAR file into the container (make sure it exists after build)
+COPY build/libs/service-registry-1.0-SNAPSHOT.jar service-registry.jar
+
+# Run the application using the built JAR file
+CMD ["java", "-jar", "service-registry.jar"]
