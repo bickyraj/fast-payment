@@ -15,7 +15,7 @@ RUN chmod +x ./gradlew
 COPY . .
 
 # Build the project using the Gradle wrapper (runs in the /app directory)
-RUN ./gradlew build --no-daemon
+RUN ./gradlew build -Dspring.profiles.active=docker --no-daemon
 
 # Expose the port the config server will run on (default for Eureka is 8761)
 EXPOSE 8761
