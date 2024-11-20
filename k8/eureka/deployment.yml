@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: eureka-service
-        image: bickyrajkayastha/fast-payment-eureka-service:dde1051c64cd2096d5eaafd6ef2f420a1a2505b8
+        image: bickyrajkayastha/fast-payment-eureka-service:3cfea09902be7e105d3e48d5c38b5d93ae26b4b0
         imagePullPolicy: Always
         ports:
         - containerPort: 8761
