@@ -5,9 +5,11 @@ metadata:
   labels:
     app: eureka-service
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
-    - port: 8761
-      targetPort: 8761
+    - protocol: TCP
+      port: 80         # Exposes the service on port 80
+      targetPort: 8761  # The port on the container
+      nodePort: 30002
   selector:
     app: eureka-service
