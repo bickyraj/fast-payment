@@ -16,7 +16,7 @@ COPY .m2 /root/.m2
 COPY . .
 
 # Build the project using the Gradle wrapper (runs in the /app directory)
-RUN ./gradlew clean build -Dspring.profiles.active=kube --no-daemon
+RUN ./gradlew clean build --no-daemon
 
 # --------------------------------------------------
 
