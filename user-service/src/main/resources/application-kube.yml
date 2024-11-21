@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: kube
   application:
     name: user-service
   config:
