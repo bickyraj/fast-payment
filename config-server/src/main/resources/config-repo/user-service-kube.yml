@@ -1,0 +1,70 @@
+spring:
+  rabbitmq:
+    host: host.docker.internal
+    port: 5672
+
+  datasource:
+    url: jdbc:postgresql://host.docker.internal:5432/demospring_db
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: fast-payment
+            client-secret: B5AROsL8nOKhoyjTS1X8jTmwKxJDyFb9
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid,profile,email
+        provider:
+          keycloak:
+            issuer-uri: http://host.docker.internal:9065/realms/fast-payment
+            user-info-uri: http://host.docker.internal:9065/realms/fast-payment/protocol/openid-connect/userinfo
+            token-uri: http://host.docker.internal:9065/realms/fast-payment/protocol/openid-connect/token
+            authorization-uri: http://host.docker.internal:9065/realms/fast-payment/protocol/openid-connect/auth
+      resourceserver:
+        jwt:
+          issuer-uri: http://host.docker.internal:9065/realms/fast-payment
+          jwk-set-uri:  http://host.docker.internal:9065/realms/fast-payment/protocol/openid-connect/certs
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+keycloak:
+  realm: fast-payment
+  auth-server-url: http://host.docker.internal:9065
+  resource: fast-payment
+  credentials:
+    secret: B5AROsL8nOKhoyjTS1X8jTmwKxJDyFb9
+  public-client: true
+  use-resource-role-mappings: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://service-registry:8761/eureka/
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
