@@ -1,0 +1,100 @@
+server:
+  port: 3030
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: keycloak
+          uri: http://host.docker.internal:9065
+          predicates:
+            - Path=/auth/**
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/orders/**
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/products/**
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/payment/**
+        - id: order-payment-service
+          uri: lb://order-payment-service
+          predicates:
+            - Path=/api/order-payment/**
+        - id: delivery-service
+          uri: lb://delivery-service
+          predicates:
+            - Path=/api/delivery/**
+        - id: report-service
+          uri: lb://report-service
+          predicates:
+            - Path=/api/reports/**
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/notification/**
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: fast-payment
+            client-secret: B5AROsL8nOKhoyjTS1X8jTmwKxJDyFb9
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid, profile, email
+
+        provider:
+          keycloak:
+            issuer-uri: http://host.docker.internal:9065/realms/fast-payment
+            user-info-uri: http://host.docker.internal:9065/realms/fast-payment/protocol/openid-connect/userinfo
+            token-uri: http://host.docker.internal:9065/realms/fast-payment/protocol/openid-connect/token
+            authorization-uri: http://host.docker.internal:9065/realms/fast-payment/protocol/openid-connect/auth
+      resourceserver:
+        jwt:
+          issuer-uri: http://host.docker.internal:9065/realms/fast-payment
+          jwk-set-uri: http://host.docker.internal:9065/realms/fast-payment/protocol/openid-connect/certs
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+        security: DEBUG
+        cloud:
+          gateway: DEBUG
+        boot:
+          web:
+            servlet:
+              FilterRegistrationBean: TRACE
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka/
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: true
