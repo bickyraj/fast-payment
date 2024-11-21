@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build and Push Docker Image for api-gateway
 
 # This workflow triggers on pushes to the main branch or specific changes in the 'notification-service' directory
 on:
