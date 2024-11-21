@@ -5,11 +5,11 @@ metadata:
   labels:
     app: service-registry
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 80         # Exposes the service on port 80
       targetPort: 8761  # The port on the container
-      nodePort: 31000
+#      nodePort: 31000
   selector:
     app: service-registry
