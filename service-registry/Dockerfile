@@ -1,5 +1,5 @@
-# Use a base image with OpenJDK 17
-FROM openjdk:17-jdk-slim
+# Use a base image with OpenJDK 17 for building
+FROM openjdk:17-jdk-slim AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -15,10 +15,21 @@ RUN chmod +x ./gradlew
 COPY . .
 
 # Build the project using the Gradle wrapper (runs in the /app directory)
-RUN ./gradlew build  --no-daemon
+RUN ./gradlew clean build --no-daemon
 
-# Expose the port the config server will run on (default for Eureka is 8761)
+# --------------------------------------------------
+
+# Use a smaller runtime image to run the JAR
+FROM openjdk:17-jdk-slim
+
+# Set the working directory for the runtime
+WORKDIR /app
+
+# Copy the JAR file from the build stage to the runtime stage
+COPY --from=build /app/build/libs/*.jar ./app.jar
+
+# Expose the port the service will run on (update to match your service)
 EXPOSE 8761
 
-# Run the application using the built JAR file (replace with your actual JAR name if necessary)
-CMD ["java", "-jar", "build/libs/service-registry-1.0-SNAPSHOT.jar"]
+# Run the application using the copied JAR file
+CMD ["java", "-jar", "/app/app.jar"]
