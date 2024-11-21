@@ -11,6 +11,7 @@ COPY gradle/ gradle/
 # Add execution permissions to the Gradle wrapper
 RUN chmod +x ./gradlew
 
+COPY .m2 /root/.m2
 # Copy the rest of the project files to the container
 COPY . .
 
