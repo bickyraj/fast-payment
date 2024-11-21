@@ -10,6 +10,6 @@ spec:
     - protocol: TCP
       port: 80         # Exposes the service on port 80
       targetPort: 8761  # The port on the container
-      nodePort: 8761
+      nodePort: 31000
   selector:
     app: service-registry
