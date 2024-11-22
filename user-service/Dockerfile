@@ -15,7 +15,7 @@ RUN chmod +x ./gradlew
 COPY . .
 
 # Build the project using the Gradle wrapper (runs in the /app directory)
-RUN ./gradlew clean build --no-daemon
+RUN ./gradlew clean build -Dspring.profiles.active=kube --no-daemon
 
 # --------------------------------------------------
 
