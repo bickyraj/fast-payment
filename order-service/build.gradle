@@ -9,8 +9,8 @@ group = 'com.bicky'
 version = '1.0-SNAPSHOT'
 
 repositories {
-    mavenLocal()
     mavenCentral()
+    maven { url 'https://jitpack.io' }
     maven { url "https://repo.spring.io/milestone" }
     maven { url "https://repo.spring.io/snapshot" }
 }
@@ -40,7 +40,7 @@ dependencies {
     implementation 'org.springframework.security:spring-security-oauth2-resource-server'
     implementation 'org.springframework.security:spring-security-oauth2-jose'
     implementation 'org.apache.camel.springboot:camel-spring-boot-starter:4.0.2'
-    implementation 'com.bicky:fast-payment-contracts:1.0.0'
+    implementation 'com.github.bickyraj:fast-payment-contracts:1.0.5'
     implementation 'com.google.protobuf:protobuf-java:3.19.1'
     implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
     implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.14.1'
