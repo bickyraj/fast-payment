@@ -8,17 +8,10 @@ group = 'com.bicky'
 version = '1.0-SNAPSHOT'
 
 repositories {
-    maven {
-        name = "GitHubPackages"
-        url = uri("https://maven.pkg.github.com/bickyraj/fast-payment-contracts")
-        credentials {
-            username = project.findProperty("gpr.user") ?: System.getenv("GIT_USERNAME")
-            password = project.findProperty("gpr.token") ?: System.getenv("GIIT_PACKAGE_ACCESS_TOKEN")
-        }
-    }
     mavenCentral()
     maven { url "https://repo.spring.io/milestone" }
     maven { url "https://repo.spring.io/snapshot" }
+    maven { url 'https://jitpack.io' }
 }
 
 java {
@@ -42,7 +35,7 @@ dependencies {
     implementation 'org.springframework.security:spring-security-oauth2-resource-server'
     implementation 'org.springframework.security:spring-security-oauth2-jose'
     implementation 'org.apache.camel.springboot:camel-spring-boot-starter:4.0.2'
-    implementation 'com.bicky:fast-payment-contracts:1.0.0'
+    implementation 'com.github.bickyraj:fast-payment-contracts:1.0.5'
     implementation 'com.google.protobuf:protobuf-java:3.19.1'
     implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
     implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.14.1'
