@@ -31,7 +31,7 @@ jobs:
       # Step 4: Build the Docker image
       - name: Build the Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/fast-payment-order-servicee:latest ./order-service
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/fast-payment-order-service:latest ./order-service
           docker tag ${{ secrets.DOCKER_USERNAME }}/fast-payment-order-service:latest ${{ secrets.DOCKER_USERNAME }}/fast-payment-order-service:${{ github.sha }}
 
       # Step 5: Push the Docker image to Docker Hub
