@@ -8,7 +8,14 @@ group = 'com.bicky'
 version = '1.0-SNAPSHOT'
 
 repositories {
-    mavenLocal()
+    maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/bickyraj/fast-payment-contracts")
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("GIT_USERNAME")
+            password = project.findProperty("gpr.token") ?: System.getenv("GIIT_PACKAGE_ACCESS_TOKEN")
+        }
+    }
     mavenCentral()
     maven { url "https://repo.spring.io/milestone" }
     maven { url "https://repo.spring.io/snapshot" }
