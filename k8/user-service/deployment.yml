@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: user-service
-        image: bickyrajkayastha/fast-payment-user-service:latest
+        image: bickyrajkayastha/fast-payment-user-service:97d466654a3d1fccd5680709dc1ba7eea4469480
         imagePullPolicy: Always
         ports:
         - containerPort: 7024
