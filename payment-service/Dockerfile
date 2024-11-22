@@ -1,5 +1,5 @@
-# Use a base image with OpenJDK 17
-FROM openjdk:17-jdk-slim
+# Use a base image with OpenJDK 17 for building
+FROM openjdk:17-jdk-slim AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -12,14 +12,24 @@ COPY gradle/ gradle/
 RUN chmod +x ./gradlew
 
 # Copy the rest of the project files to the container
-COPY .m2 /root/.m2
 COPY . .
 
 # Build the project using the Gradle wrapper (runs in the /app directory)
-RUN ./gradlew build --no-daemon
+RUN ./gradlew clean build -Dspring.profiles.active=docker --no-daemon
 
-# Expose the port the config server will run on (default for Eureka is 8761)
+# --------------------------------------------------
+
+# Use a smaller runtime image to run the JAR
+FROM openjdk:17-jdk-slim
+
+# Set the working directory for the runtime
+WORKDIR /app
+
+# Copy the JAR file from the build stage to the runtime stage
+COPY --from=build /app/build/libs/*.jar ./app.jar
+
+# Expose the port the service will run on (update to match your service)
 EXPOSE 7073
 
-# Run the application using the built JAR file (replace with your actual JAR name if necessary)
-CMD ["java", "-jar", "build/libs/payment-service-1.0-SNAPSHOT.jar"]
+# Run the application using the copied JAR file
+CMD ["java", "-jar", "/app/app.jar"]
