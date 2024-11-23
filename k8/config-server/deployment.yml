@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: config-server
-        image: bickyrajkayastha/fast-payment-config-server:b4f9ab896c04008092d68f20ec1a85fb6262f1f8
+        image: bickyrajkayastha/fast-payment-config-server:af2c1fd0e239b896bd08c24ec54fb67b067e2b79
         imagePullPolicy: Always
         ports:
         - containerPort: 8888
