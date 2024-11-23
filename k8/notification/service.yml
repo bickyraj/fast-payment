@@ -5,9 +5,11 @@ metadata:
   labels:
     app: notification-service
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
-    - port: 7022
-      targetPort: 7022
+    - protocol: TCP
+      port: 7022         # Exposes the service on port 80
+      targetPort: 7022  # The port on the container
+#      nodePort: 31000
   selector:
     app: notification-service
