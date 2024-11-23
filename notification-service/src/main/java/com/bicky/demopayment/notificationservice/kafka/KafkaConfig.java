@@ -46,7 +46,7 @@ public class KafkaConfig {
         ConcurrentKafkaListenerContainerFactory<String, PaymentEvent> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
 
-        factory.setConsumerFactory(paymentEventConsumerFactory(kafkaProperties)); // Pass KafkaProperties
+        factory.setConsumerFactory(paymentEventConsumerFactory(kafkaProperties));
         factory.getContainerProperties().setPollTimeout(3000); // Set poll timeout if needed
 
         return factory;

@@ -113,6 +113,20 @@ services:
       - kafka-2
     networks:
       - app-network
+  notification-service:
+    image: bickyrajkayastha/fast-payment-notification-service:407429f410c7010b8ce1e05d5266413ee426370c
+    platform: linux/amd64
+    container_name: notification-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "7022:7022"
+    depends_on:
+      - config-server
+      - eureka
+      - kafka-2
+    networks:
+      - app-network
   eureka:
     image: bickyrajkayastha/fast-payment-service-registry:latest
     container_name: eureka
