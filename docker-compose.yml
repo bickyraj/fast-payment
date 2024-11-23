@@ -122,6 +122,7 @@ services:
 #    build:
 #      context: ./config-server
     image: bickyrajkayastha/fast-payment-config-server:latest
+    platform: linux/amd64
     container_name: config-server
     ports:
       - "8888:8888"
