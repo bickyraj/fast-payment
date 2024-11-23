@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: report-service
+  labels:
+    app: report-service
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 7026         # Exposes the service on port 80
+      targetPort: 7026  # The port on the container
+#      nodePort: 31000
+  selector:
+    app: report-service

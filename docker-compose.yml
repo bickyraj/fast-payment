@@ -95,7 +95,8 @@ services:
   payment-service:
 #    build:
 #      context: ./payment-service
-    image: bickyrajkayastha/fast-payment-payment-service:latest
+    image: bickyrajkayastha/fast-payment-payment-service:9f2468f052c2881a38b37bf9fba07bf49a3e119e
+    platform: linux/amd64
     container_name: payment-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -121,7 +122,7 @@ services:
   config-server:
 #    build:
 #      context: ./config-server
-    image: bickyrajkayastha/fast-payment-config-server:latest
+    image: bickyrajkayastha/fast-payment-config-server:bc9cf9d73ab8fe5903ac72ef7a64805e00bc790d
     platform: linux/amd64
     container_name: config-server
     ports:
