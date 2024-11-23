@@ -74,8 +74,8 @@ services:
     networks:
       - app-network
   report-service:
-    build:
-      context: ./report-service
+    image: bickyrajkayastha/fast-payment-report-service:latest
+    platform: linux/amd64
     container_name: report-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -90,6 +90,7 @@ services:
       - elasticsearch
       - kafka-2
       - mongodb
+      - zipkin
     networks:
       - app-network
   payment-service:
