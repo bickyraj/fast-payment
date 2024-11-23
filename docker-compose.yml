@@ -58,8 +58,7 @@ services:
     networks:
       - app-network
   order-payment-service:
-    build:
-      context: ./order-payment-service
+    image: bickyrajkayastha/fast-payment-order-payment-service:latest
     container_name: order-payment-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker

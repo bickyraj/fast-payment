@@ -32,8 +32,7 @@ spring:
             authorization-uri: http://keycloak:9065/realms/fast-payment/protocol/openid-connect/auth
       resourceserver:
         jwt:
-          issuer-uri: http://keycloak:9065/auth/realms/fast-payment
-#          jwk-set-uri: http://keycloak:9065/auth/realms/fast-payment/protocol/openid-connect/certs
+          issuer-uri: http://keycloak:9065/realms/fast-payment
           jwk-set-uri:  http://keycloak:9065/realms/fast-payment/protocol/openid-connect/certs
 logging:
   level:
