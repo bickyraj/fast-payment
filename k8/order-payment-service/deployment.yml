@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-payment-service
+  labels:
+    app: order-payment-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-payment-service
+  template:
+    metadata:
+      labels:
+        app: order-payment-service
+    spec:
+      containers:
+      - name: order-payment-service
+        image: bickyrajkayastha/fast-payment-order-payment-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 7074
