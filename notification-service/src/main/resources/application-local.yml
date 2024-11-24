@@ -1,4 +1,15 @@
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 546635574263-r70snn8f1eg225t9g0h63043lgfsvcar.apps.googleusercontent.com
+            client-secret: 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
+    user:
+      password: admin
+      name: admin
+
   kafka:
     bootstrap-servers: localhost:39092
     producer:
@@ -26,6 +37,16 @@ spring:
 logging:
   level:
     org.springframework.boot.autoconfigure.mail: DEBUG
+management:
+  endpoint:
+    prometheus:
+      enabled: true
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health,info,metrics
 
 server:
   port: 7022
