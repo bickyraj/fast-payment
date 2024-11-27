@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: notification-service
-        image: bickyrajkayastha/fast-payment-notification-service:c0fa7d839912dbc4cd63170ec0e1d9a28053f848
+        image: bickyrajkayastha/fast-payment-notification-service:bc7db7e187abaeaeb145cd529bb784f2609ca120
         imagePullPolicy: Always
         ports:
         - containerPort: 7022
