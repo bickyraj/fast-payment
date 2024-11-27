@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id "org.sonarqube" version "4.0.0.2929"
     id 'org.springframework.boot' version '3.2.3'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
@@ -43,6 +44,14 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     implementation 'org.projectlombok:lombok:1.18.26'  // Or the latest version
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "fast-payment"
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.token", "sqp_8fa10d21fb39704b7c3194e6fb9f88e9c81cd033"
+    }
 }
 
 test {

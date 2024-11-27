@@ -18,7 +18,7 @@ public class NotificationController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity<String> test() throws Exception {
+    public ResponseEntity<String> test() {
         notificationService.getUserId();
         return ResponseEntity.ok("Test");
     }

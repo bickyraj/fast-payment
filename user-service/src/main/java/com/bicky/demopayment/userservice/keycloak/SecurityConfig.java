@@ -38,7 +38,6 @@ public class SecurityConfig {
                 .cors((cors) -> cors
                         .configurationSource(myWebsiteConfigurationSource())
                 )
-//                .oauth2Login(Customizer.withDefaults())
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })

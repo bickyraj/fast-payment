@@ -1,10 +1,12 @@
 package com.bicky.demopayment.notificationservice.service;
 
 import com.bicky.demopayment.notificationservice.shared.valueobject.PaymentEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class PaymentEventProducer {
 
     private final KafkaTemplate<String, PaymentEvent> kafkaTemplate;
@@ -18,6 +20,6 @@ public class PaymentEventProducer {
     // Method to send PaymentEvent
     public void sendPaymentEvent(PaymentEvent paymentEvent) {
         kafkaTemplate.send(TOPIC, paymentEvent.getUserId().toString(), paymentEvent);  // Sending message with userId as the key
-        System.out.println("PaymentEvent sent: " + paymentEvent);
+        log.info("Payment event sent to topic {}", TOPIC);
     }
 }

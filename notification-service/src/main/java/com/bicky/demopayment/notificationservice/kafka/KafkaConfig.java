@@ -1,6 +1,7 @@
 package com.bicky.demopayment.notificationservice.kafka;
 
 import com.bicky.demopayment.notificationservice.shared.valueobject.PaymentEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 @Configuration
 @EnableKafka
+@Slf4j
 public class KafkaConfig {
 
     @Bean
@@ -55,7 +57,7 @@ public class KafkaConfig {
     @Bean
     public ProducerFactory<String, PaymentEvent> paymentEventProducerFactory(KafkaProperties kafkaProperties) {
         Map<String, Object> configProps = new HashMap<>(kafkaProperties.getProducer().getProperties());
-        System.out.println(kafkaProperties.getBootstrapServers());
+        log.info(kafkaProperties.getBootstrapServers().toString());
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);

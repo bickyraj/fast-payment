@@ -2,11 +2,13 @@ package com.bicky.demopayment.notificationservice.service;
 
 import com.bicky.demopayment.notificationservice.shared.valueobject.PaymentEvent;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class NotificationConsumer {
 
     private final EmailService emailService;
@@ -15,13 +17,13 @@ public class NotificationConsumer {
     public void consumePaymentSuccessMessage(PaymentEvent paymentEvent) {
         // Process the message
         emailService.sendSimpleEmail();
-        System.out.println("Received payment event: " + paymentEvent);
+        log.info("Received payment event: " + paymentEvent);
         sendEmailNotification(paymentEvent);
     }
 
     public void sendEmailNotification(PaymentEvent paymentEvent) {
         // Logic to send email
-        System.out.println("Sending email for payment event: " + paymentEvent);
+        log.info("Sending payment event: " + paymentEvent);
         emailService.sendSimpleEmail();
     }
 }
