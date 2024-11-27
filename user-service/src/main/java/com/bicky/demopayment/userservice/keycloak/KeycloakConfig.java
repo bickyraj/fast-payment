@@ -9,6 +9,8 @@ import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @KeycloakConfiguration
 @EnableConfigurationProperties(KeycloakSpringBootProperties.class)
@@ -30,5 +32,10 @@ public class KeycloakConfig {
     @Bean
     public KeycloakConfigResolver keycloakConfigResolver() {
         return new KeycloakSpringBootConfigResolver();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
