@@ -32,6 +32,9 @@ spring:
           jwk-set-uri:  http://keycloak:9065/realms/fast-payment/protocol/openid-connect/certs
 logging:
   level:
+    org.springframework.web.client.RestTemplate: DEBUG
+    feign: DEBUG
+    org.springframework.security.oauth2: DEBUG
     org.springframework.security: DEBUG
 
 keycloak:

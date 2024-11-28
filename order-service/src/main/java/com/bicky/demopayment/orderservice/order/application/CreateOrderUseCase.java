@@ -56,6 +56,9 @@ public class CreateOrderUseCase {
                     .build();
             orderItems.add(orderItem);
         }
-        return Response.of(orderService.creatOrder(orderItems, request.getRequestBody().getPaymentMethodId()), "successful");
+        return Response.of(
+                orderService
+                        .creatOrder(orderItems, request.getRequestBody()
+                        .getPaymentMethodId()), "successful");
     }
 }
