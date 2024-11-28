@@ -20,6 +20,8 @@ spring:
           uri: lb://order-service
           predicates:
             - Path=/api/orders/**
+          filters:
+            - AddRequestHeader=Authorization, $request.headers.Authorization
         - id: product-service
           uri: lb://product-service
           predicates:

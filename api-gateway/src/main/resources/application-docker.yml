@@ -20,6 +20,8 @@ spring:
           uri: lb://order-service
           predicates:
             - Path=/api/orders/**
+          filters:
+            - AddRequestHeader=Authorization, $request.headers.Authorization
         - id: product-service
           uri: lb://product-service
           predicates:
@@ -28,6 +30,8 @@ spring:
           uri: lb://payment-service
           predicates:
             - Path=/api/payment/**
+          filters:
+            - AddRequestHeader=Authorization, $request.headers.Authorization
         - id: order-payment-service
           uri: lb://order-payment-service
           predicates:

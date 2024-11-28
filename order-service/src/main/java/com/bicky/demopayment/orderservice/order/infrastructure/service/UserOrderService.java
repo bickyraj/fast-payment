@@ -1,6 +1,7 @@
 package com.bicky.demopayment.orderservice.order.infrastructure.service;
 
 import com.bicky.demopayment.orderservice.order.domain.entity.Order;
+import com.bicky.demopayment.orderservice.order.domain.entity.User;
 import com.bicky.demopayment.orderservice.order.domain.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,6 @@ public class UserOrderService {
     private final OrderRepository orderRepository;
 
     public List<Order> allOrders() {
-        return orderRepository.findAllByUserId(userService.getCurrentUser().getId());
+        return orderRepository.findAllByUserId(userService.getCurrentUser().map(User::getId).orElse(null));
     }
 }

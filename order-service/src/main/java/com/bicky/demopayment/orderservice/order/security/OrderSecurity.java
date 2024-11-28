@@ -2,7 +2,6 @@ package com.bicky.demopayment.orderservice.order.security;
 
 import com.bicky.demopayment.orderservice.order.domain.entity.Order;
 import com.bicky.demopayment.orderservice.order.domain.repository.OrderRepository;
-import com.bicky.demopayment.orderservice.shared.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
