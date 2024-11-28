@@ -6,7 +6,6 @@ import com.bicky.demopayment.paymentservice.payment.domain.entity.UserPaymentPro
 import com.bicky.demopayment.paymentservice.payment.domain.repository.PaymentMethodRepository;
 import com.bicky.demopayment.paymentservice.payment.domain.repository.UserPaymentProviderRepository;
 import com.bicky.demopayment.paymentservice.payment.domain.repository.UserRepository;
-import com.bicky.demopayment.paymentservice.shared.utils.SecurityUtils;
 import com.bicky.demopayment.paymentservice.shared.valueobject.CardDetail;
 import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentMethodId;
 import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentProvider;
@@ -29,7 +28,7 @@ public class UserPaymentService {
     }
 
     public boolean savePaymentMethod(PaymentProvider provider, PaymentMethodId paymentMethodId) {
-        String userId = SecurityUtils.getCurrentUserId();
+        String userId = "123123123";
         User user = userRepository.findByKeycloakId(userId);
         UserPaymentProvider userPaymentProvider = userPaymentProviderRepository
                 .getUserPaymentProviderBy(user.getId(), provider);

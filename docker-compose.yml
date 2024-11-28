@@ -26,7 +26,7 @@ services:
     networks:
       - app-network
   product-service:
-    image: bickyrajkayastha/fast-payment-product-service:latest
+    image: bickyrajkayastha/fast-payment-product-service:d535605789079de53b933bc0b26d1d1de7902971
     container_name: product-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker

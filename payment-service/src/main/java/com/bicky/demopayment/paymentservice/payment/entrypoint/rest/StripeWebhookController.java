@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stripe.model.Event;
 import com.stripe.net.Webhook;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,7 +17,6 @@ public class StripeWebhookController {
     private final UpdatePaymentStatusUseCase updatePaymentStatusUseCase;
 
     @PostMapping
-    @PreAuthorize("permitAll()")
     public void handleStripeWebhook(@RequestBody String payload,
                                       @RequestHeader("Stripe-Signature") String sigHeader) {
         updatePaymentStatusUseCase
