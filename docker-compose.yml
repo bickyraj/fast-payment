@@ -1,6 +1,6 @@
 services:
   api-gateway-service:
-    image: bickyrajkayastha/fast-payment-api-gateway:latest
+    image: bickyrajkayastha/fast-payment-api-gateway:dd7e403f40ceccab41293779c2d89845a4d9306d
     container_name: api-gateway-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
