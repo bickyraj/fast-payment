@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: api-gateway
-        image: bickyrajkayastha/fast-payment-api-gateway:86eeac461c77923a90ded0ba281cd9dedb33e233
+        image: bickyrajkayastha/fast-payment-api-gateway:6bbbb23781550da68fac6767c0f354cafbec9ab0
         imagePullPolicy: Always
         ports:
         - containerPort: 3030
