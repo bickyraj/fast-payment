@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface JpaUserRepository extends JpaRepository<UserModel, Long> {
     Optional<UserModel> findByKeycloakId(String keycloakId);
+    Optional<UserModel> findById(Long userId);
 }

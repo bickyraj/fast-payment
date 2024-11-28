@@ -12,6 +12,8 @@ import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.ws.rs.NotFoundException;
+
 @RequiredArgsConstructor
 @Service
 public class UserPaymentService {
@@ -19,6 +21,7 @@ public class UserPaymentService {
     private final UserRepository userRepository;
     private final UserPaymentProviderRepository userPaymentProviderRepository;
     private final PaymentMethodRepository paymentMethodRepository;
+    private final UserService userService;
 
     public boolean createPaymentProviderCustomer(User user, PaymentProvider paymentProvider) {
         PaymentServiceProvider paymentServiceProvider = new PaymentServiceProvider(paymentProvider);
@@ -27,9 +30,13 @@ public class UserPaymentService {
         return true;
     }
 
-    public boolean savePaymentMethod(PaymentProvider provider, PaymentMethodId paymentMethodId) {
-        String userId = "123123123";
-        User user = userRepository.findByKeycloakId(userId);
+    public boolean savePaymentMethod(PaymentProvider provider, PaymentMethodId paymentMethodId) throws NotFoundException {
+        String keycloakId = userService
+                .getUser()
+                .map(user -> user.getKeycloakId())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        User user = userRepository.findByKeycloakId(keycloakId);
         UserPaymentProvider userPaymentProvider = userPaymentProviderRepository
                 .getUserPaymentProviderBy(user.getId(), provider);
 

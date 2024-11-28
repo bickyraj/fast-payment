@@ -8,6 +8,7 @@ import com.bicky.demopayment.paymentservice.payment.domain.repository.PaymentMet
 import com.bicky.demopayment.paymentservice.payment.domain.repository.PaymentRepository;
 import com.bicky.demopayment.paymentservice.payment.domain.repository.UserPaymentProviderRepository;
 import com.bicky.demopayment.paymentservice.payment.domain.repository.UserRepository;
+import com.bicky.demopayment.paymentservice.paymentmethod.infrastructure.client.UserClient;
 import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentCustomerId;
 import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentIntentID;
 import com.bicky.demopayment.paymentservice.shared.valueobject.PaymentMethodId;
@@ -25,8 +26,7 @@ public class PaymentService {
 
     public Payment createPayment(Long paymentMethodId, Double amount) {
         PaymentMethod paymentMethod = paymentMethodRepository.findById(paymentMethodId);
-        String keycloakId = "1312312lkjoij";
-        User user = userRepository.findByKeycloakId(keycloakId);
+        User user = userRepository.findByUserId(paymentMethod.getUser().getId());
         PaymentServiceProvider paymentServiceProvider = new PaymentServiceProvider(paymentMethod.getPaymentProvider());
         UserPaymentProvider userPaymentProvider = userPaymentProviderRepository.getUserPaymentProviderBy(
                 paymentMethod.getUser().getId(),
