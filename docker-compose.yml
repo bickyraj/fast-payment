@@ -243,11 +243,21 @@ services:
       - xpack.security.enabled=false
     ports:
       - "9200:9200"
-      - "9300:9300"
     networks:
       - app-network
     volumes:
       - esdata:/usr/share/elasticsearch/data
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.10.0
+    container_name: logstash
+    environment:
+      - xpack.monitoring.enabled=false
+    ports:
+      - "6000:6000" # Logstash input port
+    volumes:
+      - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    networks:
+      - app-network
   kibana:
     image: docker.elastic.co/kibana/kibana:8.0.0
     container_name: kibana
