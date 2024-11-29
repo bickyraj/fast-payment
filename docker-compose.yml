@@ -135,7 +135,7 @@ services:
     networks:
       - app-network
   config-server:
-    image: bickyrajkayastha/fast-payment-config-server:f5837a83e35122ef2741b53225e0ba30a4a7b1b8
+    image: bickyrajkayastha/fast-payment-config-server:023fcbe088c7ac04a0962d7b56730a4d16de501a
     platform: linux/amd64
     container_name: config-server
     ports:
