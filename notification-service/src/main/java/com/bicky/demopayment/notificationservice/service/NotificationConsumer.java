@@ -1,6 +1,6 @@
 package com.bicky.demopayment.notificationservice.service;
 
-import com.bicky.demopayment.notificationservice.shared.valueobject.PaymentEvent;
+import com.bickyraj.shared_dto.PaymentEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;

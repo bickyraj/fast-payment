@@ -43,6 +43,7 @@ dependencies {
     implementation 'io.micrometer:micrometer-tracing-bridge-brave'
     implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'com.github.bickyraj:online-market-shared-dto:1.0.3'
 
     // payment-service
 //    implementation project(':shared-module')

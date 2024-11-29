@@ -6,6 +6,10 @@ spring:
           google:
             client-id: 546635574263-r70snn8f1eg225t9g0h63043lgfsvcar.apps.googleusercontent.com
             client-secret: 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
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9065/realms/fast-payment
+          jwk-set-uri: http://localhost:9065/realms/fast-payment/protocol/openid-connect/certs
     user:
       password: admin
       name: admin

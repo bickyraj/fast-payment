@@ -1,6 +1,6 @@
 package com.bicky.demopayment.notificationservice.kafka;
 
-import com.bicky.demopayment.notificationservice.shared.valueobject.PaymentEvent;
+import com.bickyraj.shared_dto.PaymentEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;

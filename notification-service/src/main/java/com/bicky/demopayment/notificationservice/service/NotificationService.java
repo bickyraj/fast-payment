@@ -1,6 +1,6 @@
 package com.bicky.demopayment.notificationservice.service;
 
-import com.bicky.demopayment.notificationservice.shared.valueobject.PaymentEvent;
+import com.bickyraj.shared_dto.PaymentEvent;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
