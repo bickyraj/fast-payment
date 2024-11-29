@@ -1,4 +1,4 @@
-package com.bicky.demopayment.reportservice.feign;
+package com.bicky.demopayment.reportservice.config.feign;
 
 import com.bicky.demopayment.reportservice.exception.PaymentServiceException;
 import feign.Response;

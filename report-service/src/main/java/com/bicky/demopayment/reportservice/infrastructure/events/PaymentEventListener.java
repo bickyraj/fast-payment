@@ -18,6 +18,7 @@ public class PaymentEventListener {
         purchase.setAmount(paymentEvent.getTotalAmount());
         purchase.setUserId(paymentEvent.getUserId());
         purchase.setCreatedAt(paymentEvent.getCreatedDate());
+        System.out.println("payment received: " + paymentEvent);
         purchaseRepository.save(purchase);
     }
 }

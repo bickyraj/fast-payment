@@ -1,7 +1,7 @@
 package com.bicky.demopayment.reportservice.infrastructure.client;
 
 import com.bicky.demopayment.reportservice.domain.entity.User;
-import com.bicky.demopayment.reportservice.feign.FeignConfig;
+import com.bicky.demopayment.reportservice.config.feign.FeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 

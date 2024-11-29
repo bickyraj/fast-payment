@@ -114,7 +114,7 @@ services:
     networks:
       - app-network
   notification-service:
-    image: bickyrajkayastha/fast-payment-notification-service:407429f410c7010b8ce1e05d5266413ee426370c
+    image: bickyrajkayastha/fast-payment-notification-service:06ed99986b55bb7656245e510254100cb3334a20
     platform: linux/amd64
     container_name: notification-service
     environment:
