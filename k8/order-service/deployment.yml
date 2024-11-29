@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: order-service
-        image: bickyrajkayastha/fast-payment-order-service:c87b22684fec37843a2e5689a0ba96a3dc484bf5
+        image: bickyrajkayastha/fast-payment-order-service:9be60e6e63127ec07871951df413ee6ccb898a0c
         imagePullPolicy: Always
         ports:
         - containerPort: 7072
