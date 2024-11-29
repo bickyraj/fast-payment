@@ -1,6 +1,7 @@
 services:
   api-gateway-service:
-    image: bickyrajkayastha/fast-payment-api-gateway:a5b74642bc6030514c749347f018d0ba53086b86
+    image: bickyrajkayastha/fast-payment-api-gateway:33a126ac60fb21a93bc264c99b1b4eae9081210d
+    platform: linux/amd64
     container_name: api-gateway-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -74,7 +75,7 @@ services:
     networks:
       - app-network
   report-service:
-    image: bickyrajkayastha/fast-payment-report-service:2ab7af793e9290cfe5fbd3aee6957380c11dc8b4
+    image: bickyrajkayastha/fast-payment-report-service:d5bc6dbbca526423443e205b42771151134ac5f6
     platform: linux/amd64
     container_name: report-service
     environment:
@@ -157,7 +158,7 @@ services:
       - app-network
   mongodb:
     image: mongo:5
-    container_name: mongo-db
+    container_name: mongodb
     environment:
       MONGO_INITDB_DATABASE: reporting_db
     volumes:
