@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: report-service
-        image: bickyrajkayastha/fast-payment-report-service:2ab7af793e9290cfe5fbd3aee6957380c11dc8b4
+        image: bickyrajkayastha/fast-payment-report-service:d5bc6dbbca526423443e205b42771151134ac5f6
         imagePullPolicy: Always
         ports:
         - containerPort: 7026
