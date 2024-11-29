@@ -7,12 +7,14 @@ import com.bicky.demopayment.orderservice.order.domain.repository.OrderRepositor
 import com.bicky.demopayment.orderservice.order.entrypoint.rest.requestbody.SaveOrderPaymentRequestBody;
 import com.bicky.demopayment.orderservice.order.infrastructure.client.OrderPaymentClient;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -25,6 +27,7 @@ public class OrderService {
         order.setTotalPrice(totalPrice);
         order.setOrderItems(orderItems);
         Order createdOrder = orderRepository.create(order);
+        log.info("Order created: {}", createdOrder);
         return orderPaymentClient.saveOrderPayment(SaveOrderPaymentRequestBody.of(createdOrder.getId(), paymentMethodId)).getBody();
     }
 

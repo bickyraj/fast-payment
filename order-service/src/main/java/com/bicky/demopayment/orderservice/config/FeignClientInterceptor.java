@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 @Configuration
-public class FeignConfig {
+public class FeignClientInterceptor {
 
     @Bean
     public RequestInterceptor requestInterceptor() {
