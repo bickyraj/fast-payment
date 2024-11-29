@@ -1,7 +1,6 @@
 package com.bicky.demopayment.orderservice.order.entrypoint.rest;
 
 import com.bicky.demopayment.orderservice.order.application.GetUserOrdersUseCase;
-import com.bicky.demopayment.orderservice.order.domain.entity.Order;
 import com.bicky.demopayment.orderservice.order.entrypoint.rest.response.GetUserOrderResponseBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
