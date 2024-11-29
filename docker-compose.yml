@@ -42,7 +42,7 @@ services:
     networks:
       - app-network
   order-service:
-    image: bickyrajkayastha/fast-payment-order-service:latest
+    image: bickyrajkayastha/fast-payment-order-service:c0c9ca93b3be7fa49a3423c52c083841d86b0f4f
     container_name: order-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
