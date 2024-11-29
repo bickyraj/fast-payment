@@ -46,6 +46,8 @@ spring:
           uri: lb://report-service
           predicates:
             - Path=/api/reports/**
+          filters:
+            - AddRequestHeader=Authorization, $request.headers.Authorization
         - id: notification-service
           uri: lb://notification-service
           predicates:
