@@ -1,0 +1,51 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 546635574263-r70snn8f1eg225t9g0h63043lgfsvcar.apps.googleusercontent.com
+            client-secret: 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
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:9065/realms/fast-payment
+          jwk-set-uri: http://keycloak:9065/realms/fast-payment/protocol/openid-connect/certs
+    user:
+      password: admin
+      name: admin
+
+  kafka:
+    bootstrap-servers: kafka-2:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: report-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+  mail:
+    host: smtp.mailtrap.io
+    port: 2525
+    username: 729d295fad6e2f
+    password: 34ca745151d323
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+logging:
+  level:
+    org.springframework.boot.autoconfigure.mail: DEBUG
+resilience4j:
+  circuitbreaker:
+    instances:
+      NotificationServiceBreaker:
+        sliding-window-size: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 1000
+        permitted-number-of-calls-in-half-open-state: 3

@@ -74,7 +74,7 @@ services:
     networks:
       - app-network
   report-service:
-    image: bickyrajkayastha/fast-payment-report-service:latest
+    image: bickyrajkayastha/fast-payment-report-service:2ab7af793e9290cfe5fbd3aee6957380c11dc8b4
     platform: linux/amd64
     container_name: report-service
     environment:
