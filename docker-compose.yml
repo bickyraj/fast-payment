@@ -96,7 +96,7 @@ services:
   payment-service:
 #    build:
 #      context: ./payment-service
-    image: bickyrajkayastha/fast-payment-payment-service:2480c37639cce13f517530dae3b4909b2add4b3a
+    image: bickyrajkayastha/fast-payment-payment-service:619104f3a2818f50d76d4aa98b2c75f5a2587d66
     platform: linux/amd64
     container_name: payment-service
     environment:
