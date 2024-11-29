@@ -41,6 +41,12 @@ spring:
 logging:
   level:
     org.springframework.boot.autoconfigure.mail: DEBUG
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:8761/eureka/
+    registerWithEureka: true  # Ensures the service registers with Eureka
+    fetchRegistry: true
 resilience4j:
   circuitbreaker:
     instances:
