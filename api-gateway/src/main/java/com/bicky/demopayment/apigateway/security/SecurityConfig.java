@@ -47,6 +47,7 @@ public class SecurityConfig {
                         .pathMatchers("/api/order-payment/**").authenticated()
                         .pathMatchers("/api/reports/**").permitAll()
                         .pathMatchers("/fast-payment/**").permitAll()
+                        .pathMatchers("/api/notification/**").permitAll()
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
