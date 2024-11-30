@@ -17,6 +17,7 @@ public class NotificationConsumer {
     public void consumePaymentSuccessMessage(PaymentEvent paymentEvent) {
         // Process the message
         emailService.sendSimpleEmail();
+        System.out.println(Thread.currentThread().getName());
         log.info("Received payment event: " + paymentEvent);
         sendEmailNotification(paymentEvent);
     }
