@@ -46,6 +46,9 @@ management:
   tracing:
     sampling:
       probability: 1
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
 server:
   port: 7022
 resilience4j:
