@@ -44,6 +44,10 @@ dependencies {
     implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.0.2'
     implementation 'io.github.resilience4j:resilience4j-circuitbreaker:2.0.2'
 
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+    implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+
     testImplementation 'junit:junit:4.13.2'
     implementation 'org.projectlombok:lombok:1.18.26'  // Or the latest version
     annotationProcessor 'org.projectlombok:lombok:1.18.26'

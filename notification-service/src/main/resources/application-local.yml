@@ -42,6 +42,10 @@ logging:
   level:
     org.springframework.boot.autoconfigure.mail: DEBUG
 
+management:
+  tracing:
+    sampling:
+      probability: 1
 server:
   port: 7022
 resilience4j:
