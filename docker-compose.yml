@@ -115,7 +115,7 @@ services:
     networks:
       - app-network
   notification-service:
-    image: bickyrajkayastha/fast-payment-notification-service:06ed99986b55bb7656245e510254100cb3334a20
+    image: bickyrajkayastha/fast-payment-notification-service:39b101fcbee55fbe6d5cf59febb5c528db8d0003
     platform: linux/amd64
     container_name: notification-service
     environment:
@@ -136,7 +136,7 @@ services:
     networks:
       - app-network
   config-server:
-    image: bickyrajkayastha/fast-payment-config-server:f94c9536882d8d6fd1c4d1b7bcf9fd58d31940d0
+    image: bickyrajkayastha/fast-payment-config-server:b973fa16beb0053682ffddb3de732df601b6589e
     platform: linux/amd64
     container_name: config-server
     ports:
